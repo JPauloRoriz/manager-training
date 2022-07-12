@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Manager Training</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_it_email">Digite seu email</string>
+    <string name="type_it_password">Digite sua senha</string>
+    <string name="make_login">Fazer login</string>
+    <string name="register">Registre-se</string>
+</resources>
