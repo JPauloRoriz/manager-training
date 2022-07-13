@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "949713907817",
+    "firebase_url": "https://manager-training-26a17-default-rtdb.firebaseio.com",
+    "project_id": "manager-training-26a17",
+    "storage_bucket": "manager-training-26a17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949713907817:android:6a794541d49e29dfacf2f8",
+        "android_client_info": {
+          "package_name": "com.example.managertraining"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949713907817-5lvpnh4tns6ukp2k53p1n9q6t4f2a93p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWYdaLbfz-Z62ZrTxqdVc-jOOf0tueuvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949713907817-5lvpnh4tns6ukp2k53p1n9q6t4f2a93p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

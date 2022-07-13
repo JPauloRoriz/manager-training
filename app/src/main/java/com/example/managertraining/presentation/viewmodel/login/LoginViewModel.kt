@@ -7,14 +7,16 @@ import com.example.managertraining.presentation.viewmodel.login.model.LoginEvent
 import com.example.managertraining.presentation.viewmodel.login.model.LoginState
 
 class LoginViewModel : ViewModel() {
-
-    val stateLiveData = MutableLiveData<LoginState>()
+    val stateLiveData = MutableLiveData(LoginState())
     val eventLiveData = SingleLiveEvent<LoginEvent>()
 
-    init {
-        eventLiveData.value = LoginEvent.GoToHome
 
-        stateLiveData.value = stateLiveData.value?.copy(isLoading = false)
+
+    fun tapOnRegister() {
+        eventLiveData.value = LoginEvent.GoToRegister
     }
 
+    fun tapOnLogin(){
+
+    }
 }
