@@ -1,12 +1,12 @@
 package com.example.managertraining.data.repository
 
-import com.example.managertraining.data.model.UserResponse
 import com.example.managertraining.data.repository.contract.UserRepository
 import com.example.managertraining.data.service.contract.UserService
 import com.example.managertraining.domain.exception.DefaultException
 import com.example.managertraining.domain.exception.EmailInvalidException
 import com.example.managertraining.domain.exception.EmailOrPasswordInvalidException
 import com.example.managertraining.domain.exception.NoConnectionInternet
+import com.example.managertraining.domain.mapper.mapper
 import com.example.managertraining.domain.model.UserModel
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import java.io.IOException
@@ -33,16 +33,6 @@ class UserRepositoryImpl(
                 )
                 else -> Result.failure(DefaultException())
             }
-        }
-    }
-
-    private fun Result<UserResponse>.mapper(): Result<UserModel> {
-        return this.map {
-            UserModel(
-                id = it.id,
-                name = it.name,
-                email = it.email
-            )
         }
     }
 }
