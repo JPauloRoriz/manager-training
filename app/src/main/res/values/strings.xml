@@ -6,4 +6,18 @@
     <string name="type_it_password">Digite sua senha</string>
     <string name="make_login">Fazer login</string>
     <string name="register">Registre-se</string>
+    <string name="register_name">Digite seu nome</string>
+    <string name="register_login">Digite sem email</string>
+    <string name="register_create_password">Digite sua senha</string>
+    <string name="confirm_password">Confirme sua senha</string>
+    <string name="btn_register">Registrar-se</string>
+    <string name="empty_fild">Por favor, preencha todos os campos</string>
+    <string name="password_lenght">Sua senha deve ter no mínimo 5 caracters</string>
+    <string name="password_not_confirm">Senha não confirmada</string>
+    <string name="login_existing">Este login já está sendo utilizado</string>
+    <string name="login_success">Login feito com sucesso</string>
+    <string name="register_not_success">Registro não realizado</string>
+    <string name="email_already">Já existe um e-mail cadastrado em nosso sistema que corresponde a esse, por favor, faça o login ou click em esqueci a senha</string>
+    <string name="register_success">Registro feito com sucesso</string>
+    <string name="login_incomplete">Login não realizado</string>
 </resources>
