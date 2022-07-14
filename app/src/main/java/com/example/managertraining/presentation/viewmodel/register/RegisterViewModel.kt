@@ -1,5 +1,6 @@
 package com.example.managertraining.presentation.viewmodel.register
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +9,11 @@ import com.example.managertraining.domain.usecase.register.contract.RegisterUseC
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterState
-import android.content.Context
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
-    private val context : Context
+    private val context: Context
 ) : ViewModel() {
     val stateLiveData = MutableLiveData(RegisterState())
 
