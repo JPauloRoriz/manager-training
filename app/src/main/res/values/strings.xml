@@ -12,7 +12,7 @@
     <string name="confirm_password">Confirme sua senha</string>
     <string name="btn_register">Registrar-se</string>
     <string name="empty_fild">Por favor, preencha todos os campos</string>
-    <string name="password_lenght">Sua senha deve ter no mínimo 5 caracters</string>
+    <string name="password_lenght">Sua senha deve ter no mínimo 6 caracters</string>
     <string name="password_not_confirm">Senha não confirmada</string>
     <string name="login_existing">Este login já está sendo utilizado</string>
     <string name="login_success">Login feito com sucesso</string>
@@ -20,4 +20,6 @@
     <string name="email_already">Já existe um e-mail cadastrado em nosso sistema que corresponde a esse, por favor, faça o login ou click em esqueci a senha</string>
     <string name="register_success">Registro feito com sucesso</string>
     <string name="login_incomplete">Login não realizado</string>
+    <string name="email_or_password_invald">Email ou senha inválido</string>
+    <string name="not_internet">Você está sem conexão com a internet</string>
 </resources>

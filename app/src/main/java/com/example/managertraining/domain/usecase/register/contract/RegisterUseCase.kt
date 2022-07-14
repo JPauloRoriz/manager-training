@@ -1,6 +1,6 @@
 package com.example.managertraining.domain.usecase.register.contract
 
-import com.example.managertraining.domain.model.UserDomain
+import com.example.managertraining.domain.model.UserModel
 
 interface RegisterUseCase {
     suspend fun invoke(
@@ -8,5 +8,5 @@ interface RegisterUseCase {
         login: String,
         password: String,
         confirmPassword: String,
-    ) : Result<UserDomain?>
+    ) : Result<Any?>
 }

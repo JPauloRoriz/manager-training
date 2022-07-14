@@ -1,15 +1,17 @@
-package com.example.managertraining.presentation.ui
+package com.example.managertraining.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentLoginBinding
 import com.example.managertraining.presentation.viewmodel.login.LoginViewModel
 import com.example.managertraining.presentation.viewmodel.login.model.LoginEvent
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -40,14 +42,23 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            viewModel.tapOnLogin()
+            runBlocking {
+                viewModel.tapOnLogin(
+                    binding.edtLogin.text.toString(),
+                    binding.edtPassword.text.toString()
+                )
+            }
         }
     }
 
     private fun setupObservers() {
+        viewModel.stateLiveData.observe(viewLifecycleOwner){ state ->
+            binding.pbLoading.isVisible = state.isLoading
+            binding.tvMessageError.text = state.messageError
+        }
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
-                LoginEvent.GoToHome -> TODO()
+                LoginEvent.SuccessLogin -> findNavController().navigate(R.id.homeFragment)
                 LoginEvent.GoToRegister -> findNavController().navigate(R.id.registerFragment)
             }
         }

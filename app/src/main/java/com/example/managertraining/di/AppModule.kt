@@ -20,12 +20,12 @@ import org.koin.dsl.module
 val appModule = module {
 
     //viewModel
-    viewModel { LoginViewModel() }
+    viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get(), get()) }
 
     //useCase
     factory<RegisterUseCase> { RegisterUseCaseImpl(get(), get()) }
-    factory<LoginUseCase> { LoginUseCaseImpl() }
+    factory<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
 
     //repository
     factory<UserRepository> { UserRepositoryImpl(get()) }

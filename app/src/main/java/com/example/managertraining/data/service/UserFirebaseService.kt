@@ -2,11 +2,9 @@ package com.example.managertraining.data.service
 
 import com.example.managertraining.data.model.UserResponse
 import com.example.managertraining.data.service.contract.UserService
+import com.example.managertraining.domain.exception.DefaultException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class UserFirebaseService(
@@ -14,20 +12,31 @@ class UserFirebaseService(
     private val auth: FirebaseAuth
 ) : UserService {
     private val usersFirebase by lazy {
-        firestore.collection(USERS_TABLE).document("id")
+        firestore.collection(USERS_TABLE)
     }
 
     override suspend fun saveUser(name: String, email: String, password: String): Result<Any?> {
         return try {
-            val newUser = UserResponse(email, name, email)
-
-            val resultAuth = auth.createUserWithEmailAndPassword(newUser.email, password).await()
-
-            CoroutineScope(Dispatchers.IO).launch {
-                usersFirebase.set(newUser).await()
-            }
+            val resultAuth = auth.createUserWithEmailAndPassword(email, password).await()
+            val newUser = UserResponse(resultAuth.user?.uid ?: "", name, email)
+            usersFirebase.document(newUser.id).set(newUser).await()
             Result.success(null)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
+    }
 
+    override suspend fun getUser(email: String, password: String): Result<UserResponse> {
+
+        return try {
+            val resultAuth = auth.signInWithEmailAndPassword(email, password).await()
+            val uid: String = resultAuth.user?.uid.toString()
+            val resultUser = usersFirebase.document(uid).get().await()
+            resultUser.toObject(UserResponse::class.java)?.let { userResponse ->
+                Result.success(userResponse)
+            } ?: run {
+                Result.failure(DefaultException())
+            }
         } catch (exception: Exception) {
             Result.failure(exception)
         }

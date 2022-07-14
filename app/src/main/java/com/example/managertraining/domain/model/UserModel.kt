@@ -2,9 +2,8 @@ package com.example.managertraining.domain.model
 
 import java.io.Serializable
 
-data class UserDomain(
+data class UserModel(
     var id: String? = null,
     val name : String = "",
-    val email : String = "",
-    val password : String = ""
+    val email : String = ""
 ) : Serializable

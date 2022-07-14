@@ -9,9 +9,8 @@
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/drawable/ic_user_icon.xml" value="0.105" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/layout/fragment_login.xml" value="0.22" />
-        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_login.xml" value="0.2" />
-        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_register.xml" value="0.22" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_login.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

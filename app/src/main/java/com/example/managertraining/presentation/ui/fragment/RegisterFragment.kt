@@ -1,4 +1,4 @@
-package com.example.managertraining.presentation.ui
+package com.example.managertraining.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,7 +60,6 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
-
     }
 
 }
