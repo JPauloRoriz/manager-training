@@ -1,17 +1,21 @@
 package com.example.managertraining.presentation.viewmodel.login
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.managertraining.R
+import com.example.managertraining.domain.exception.EmailOrPasswordInvalidException
+import com.example.managertraining.domain.exception.NoConnectionInternetException
 import com.example.managertraining.domain.usecase.login.contract.LoginUseCase
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.login.model.LoginEvent
 import com.example.managertraining.presentation.viewmodel.login.model.LoginState
-import com.example.managertraining.presentation.viewmodel.util.setLoadingLogin
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val validationLoginUseCase: LoginUseCase
+    private val validationLoginUseCase: LoginUseCase,
+    private val context: Context
 ) : ViewModel() {
     val stateLiveData = MutableLiveData(LoginState())
     val eventLiveData = SingleLiveEvent<LoginEvent>()
@@ -25,13 +29,35 @@ class LoginViewModel(
         viewModelScope.launch {
             stateLiveData.setLoadingLogin(true)
             validationLoginUseCase.invoke(email, password)
-                .onSuccess {
+                .onSuccess { user ->
                     stateLiveData.setLoadingLogin(false)
-                    eventLiveData.value = LoginEvent.SuccessLogin
+                    stateLiveData.setMessageErrorLogin("")
+                    eventLiveData.value = LoginEvent.SuccessLogin(user)
 
-                }.onFailure {
+                }.onFailure { error ->
+                    when (error) {
+                        is EmailOrPasswordInvalidException -> {
+                            stateLiveData.setMessageErrorLogin(context.getString(R.string.email_or_password_invald))
+                        }
+                        is NoConnectionInternetException -> {
+                            stateLiveData.setMessageErrorLogin(context.getString(R.string.not_internet))
+                        }
+                        else -> {
+                            stateLiveData.setMessageErrorLogin(error.message.toString())
+                        }
+                    }
 
                 }
         }
     }
+
+    fun MutableLiveData<LoginState>.setLoadingLogin(value: Boolean) {
+        this.value = this.value?.copy(isLoading = value)
+    }
+
+    fun MutableLiveData<LoginState>.setMessageErrorLogin(message: String) {
+        this.value = this.value?.copy(isLoading = false, messageError = message)
+    }
+
+
 }

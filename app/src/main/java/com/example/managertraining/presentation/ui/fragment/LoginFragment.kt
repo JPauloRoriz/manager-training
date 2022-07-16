@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -52,15 +53,25 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.stateLiveData.observe(viewLifecycleOwner){ state ->
+        viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
             binding.pbLoading.isVisible = state.isLoading
             binding.tvMessageError.text = state.messageError
         }
+
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
-                LoginEvent.SuccessLogin -> findNavController().navigate(R.id.homeFragment)
-                LoginEvent.GoToRegister -> findNavController().navigate(R.id.registerFragment)
+                is LoginEvent.SuccessLogin -> {
+                    binding.edtPassword.text?.clear()
+                    val bundle = bundleOf(HomeFragment.KEY_USER to event.user)
+                    findNavController().navigate(R.id.homeFragment, bundle)
+                }
+                LoginEvent.GoToRegister -> {
+                    binding.edtLogin.text?.clear()
+                    binding.edtPassword.text?.clear()
+                    findNavController().navigate(R.id.registerFragment)
+                }
             }
         }
     }
+
 }

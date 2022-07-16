@@ -5,5 +5,6 @@ import java.io.Serializable
 data class UserModel(
     var id: String? = null,
     val name : String = "",
-    val email : String = ""
+    val email : String = "",
+    val trainings : List<TrainingModel> = listOf()
 ) : Serializable

@@ -22,4 +22,15 @@
     <string name="login_incomplete">Login não realizado</string>
     <string name="email_or_password_invald">Email ou senha inválido</string>
     <string name="not_internet">Você está sem conexão com a internet</string>
+    <string name="email_existing">Este email já está sendo utilizado</string>
+    <string name="training_empty">Este treino ainda não possui nenhum exercício</string>
+    <string name="training">TREINO </string>
+    <string name="description">Descrição: </string>
+    <string name="add_training">Adicionar treino</string>
+    <string name="create_training">Criar treino</string>
+    <string name="name">Nome</string>
+    <string name="example">Exemplo: Bíceps e Costas</string>
+    <string name="edti_training">Editar Treino</string>
+    <string name="name_day">Treino de %s</string>
+
 </resources>

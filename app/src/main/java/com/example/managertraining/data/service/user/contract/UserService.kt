@@ -1,7 +1,6 @@
-package com.example.managertraining.data.service.contract
+package com.example.managertraining.data.service.user.contract
 
 import com.example.managertraining.data.model.UserResponse
-import com.example.managertraining.domain.model.UserModel
 
 interface UserService {
     suspend fun saveUser(name: String, email: String, password: String): Result<Any?>

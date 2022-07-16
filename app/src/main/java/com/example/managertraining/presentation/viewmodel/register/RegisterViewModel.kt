@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.managertraining.R
+import com.example.managertraining.domain.exception.EmailExistingException
 import com.example.managertraining.domain.exception.EmailInvalidException
-import com.example.managertraining.domain.exception.NoConnectionInternet
+import com.example.managertraining.domain.exception.NoConnectionInternetException
 import com.example.managertraining.domain.usecase.register.contract.RegisterUseCase
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterState
-import com.example.managertraining.presentation.viewmodel.util.setLoadingRegister
-import com.example.managertraining.presentation.viewmodel.util.setMessageErrorRegister
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
@@ -45,8 +44,11 @@ class RegisterViewModel(
                     is EmailInvalidException -> {
                         stateLiveData.setMessageErrorRegister(context.getString(R.string.email_or_password_invald))
                     }
-                    is NoConnectionInternet -> {
+                    is NoConnectionInternetException -> {
                         stateLiveData.setMessageErrorRegister(context.getString(R.string.not_internet))
+                    }
+                    is EmailExistingException -> {
+                        stateLiveData.setMessageErrorRegister(context.getString(R.string.email_existing))
                     }
                     else -> {
                         stateLiveData.setMessageErrorRegister(error.message.toString())
@@ -54,6 +56,13 @@ class RegisterViewModel(
                 }
             }
         }
+    }
+    fun MutableLiveData<RegisterState>.setLoadingRegister(value: Boolean) {
+        this.value = this.value?.copy(isLoading = value)
+    }
+
+    fun MutableLiveData<RegisterState>.setMessageErrorRegister(message: String) {
+        this.value = this.value?.copy(isLoading = false, messageError = message)
     }
 
 }

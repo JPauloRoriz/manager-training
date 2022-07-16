@@ -1,6 +1,8 @@
 package com.example.managertraining.presentation.viewmodel.login.model
 
+import com.example.managertraining.domain.model.UserModel
+
 sealed class LoginEvent {
     object GoToRegister: LoginEvent()
-    object SuccessLogin: LoginEvent()
+    data class SuccessLogin(val user : UserModel): LoginEvent()
 }

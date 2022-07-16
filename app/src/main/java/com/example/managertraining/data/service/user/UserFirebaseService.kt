@@ -1,7 +1,7 @@
-package com.example.managertraining.data.service
+package com.example.managertraining.data.service.user
 
 import com.example.managertraining.data.model.UserResponse
-import com.example.managertraining.data.service.contract.UserService
+import com.example.managertraining.data.service.user.contract.UserService
 import com.example.managertraining.domain.exception.DefaultException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,6 +30,7 @@ class UserFirebaseService(
 
         return try {
             val resultAuth = auth.signInWithEmailAndPassword(email, password).await()
+
             val uid: String = resultAuth.user?.uid.toString()
             val resultUser = usersFirebase.document(uid).get().await()
             resultUser.toObject(UserResponse::class.java)?.let { userResponse ->
