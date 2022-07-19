@@ -7,24 +7,29 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentHomeBinding
+import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.presentation.ui.adapter.exercise.ExerciseAdapter
 import com.example.managertraining.presentation.ui.adapter.training.TrainingAdapter
+import com.example.managertraining.presentation.ui.extension.getNavigationResult
 import com.example.managertraining.presentation.viewmodel.home.HomeViewModel
 import com.example.managertraining.presentation.viewmodel.home.model.HomeEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel by viewModel<HomeViewModel>()
-    private lateinit var viewPager: ViewPager2
-    private lateinit var trainingAdapter: TrainingAdapter
-    private val exerciseAdapter by lazy { ExerciseAdapter() }
     private val user by lazy { arguments?.getSerializable(KEY_USER) as UserModel }
+    private val viewModel by viewModel<HomeViewModel> {
+        parametersOf(user)
+    }
+
+    var clickTraining: ((TrainingModel) -> Unit)? = null
+    private val exerciseAdapter by lazy { ExerciseAdapter() }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +40,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTrainings(user.id.toString())
         setupView()
         setupListeners()
         setupObservers()
@@ -44,23 +48,30 @@ class HomeFragment : Fragment() {
 
 
     private fun setupView() {
-        val fragments = viewModel.getTrainings(user.id.toString())
-        trainingAdapter = TrainingAdapter(this, fragments)
-        viewPager = binding.viewpager
-        viewPager.adapter = trainingAdapter
         binding.rvExercise.adapter = exerciseAdapter
     }
 
     private fun setupListeners() {
         binding.btnFloating.setOnClickListener {
-            viewModel.tapOnAddExercise(user)
+//            viewModel.tapOnAddExercise( )
+        }
+
+        clickTraining = {
+            viewModel.tapOnTraining(it)
         }
     }
 
     private fun setupObservers() {
+
+        this.getNavigationResult<String>(KEY_TRAININGS)?.observe(viewLifecycleOwner) { idUser ->
+            viewModel.getTrainings(idUser)
+        }
+
         viewModel.stateLiveData.observe(viewLifecycleOwner) { homeState ->
             val listFragments = homeState.listTrainings.map { trainingModel ->
-                TrainingFragment.newInstance(trainingModel)
+                TrainingFragment.newInstance(trainingModel).apply {
+                    clickTraining = this@HomeFragment.clickTraining
+                }
             }
             binding.viewpager.adapter = TrainingAdapter(this, listFragments)
         }
@@ -76,6 +87,12 @@ class HomeFragment : Fragment() {
                         bundle
                     )
                 }
+                is HomeEvent.GoToTraining -> {
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_editTrainingFragment,
+                        bundleOf(EditTrainingFragment.KEY_TRAINING to event.training)
+                    )
+                }
             }
         }
     }
@@ -83,6 +100,7 @@ class HomeFragment : Fragment() {
 
     companion object {
         const val KEY_USER: String = "user"
+        const val KEY_TRAININGS: String = "trainings"
     }
 
 

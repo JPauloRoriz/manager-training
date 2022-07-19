@@ -18,14 +18,8 @@ class CreateTrainingUseCaseImpl(
         nameTraining: String,
         descriptionTraining: String
     ): Result<Any?> {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
-
         return if (nameTraining.isEmpty() || descriptionTraining.isEmpty()) {
             return Result.failure(EmptyFildException(context.getString(R.string.empty_fild)))
-        } else if (!isConnected) {
-            Result.failure(NoConnectionInternetException())
         } else {
             repository.createTraining(idUser, nameTraining, descriptionTraining)
         }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentEditTrainingBinding
 import com.example.managertraining.domain.model.TrainingModel
+import com.example.managertraining.presentation.ui.extension.setNavigationResult
 import com.example.managertraining.presentation.viewmodel.edittraining.EditTrainingViewModel
 import com.example.managertraining.presentation.viewmodel.edittraining.model.EditTrainingEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class EditTrainingFragment : Fragment() {
     private lateinit var binding: FragmentEditTrainingBinding
     private val viewModel by viewModel<EditTrainingViewModel>()
-    private val training by lazy { arguments?.getSerializable(KEY_TRAINING) as TrainingModel }
+    private val training by lazy { arguments?.getParcelable(KEY_TRAINING) ?: TrainingModel() }
 
 
     override fun onCreateView(
@@ -86,10 +87,18 @@ class EditTrainingFragment : Fragment() {
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is EditTrainingEvent.SuccessAddTraining -> {
+                    this.setNavigationResult(
+                        training.idUser.toString(),
+                        HomeFragment.KEY_TRAININGS
+                    )
                     Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
                     findNavController().popBackStack()
                 }
                 is EditTrainingEvent.SuccessDeleteTraining -> {
+                    this.setNavigationResult(
+                        training.idUser.toString(),
+                        HomeFragment.KEY_TRAININGS
+                    )
                     Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
                     findNavController().popBackStack()
                 }

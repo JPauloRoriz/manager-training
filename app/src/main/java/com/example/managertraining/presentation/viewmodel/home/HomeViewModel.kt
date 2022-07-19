@@ -6,61 +6,48 @@ import androidx.lifecycle.viewModelScope
 import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.domain.usecase.training.contract.GetTrainingsUseCase
-import com.example.managertraining.presentation.ui.fragment.TrainingFragment
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.home.model.HomeEvent
 import com.example.managertraining.presentation.viewmodel.home.model.HomeState
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getTrainingsModelUseCase: GetTrainingsUseCase
+    private val getTrainingsModelUseCase: GetTrainingsUseCase,
+    user: UserModel
 ) : ViewModel() {
 
     val stateLiveData = MutableLiveData(HomeState())
     val eventLiveData = SingleLiveEvent<HomeEvent>()
 
+    init {
+        addTraining(
+            mutableListOf(TrainingModel(idUser = user.id))
+        )
+        getTrainings(user.id.toString())
+    }
 
-    fun getTrainings(idUser: String): List<TrainingFragment> {
+
+    fun getTrainings(idUser: String) {
         viewModelScope.launch {
             getTrainingsModelUseCase.getTrainings(idUser).onSuccess { listTrainings ->
-                if (listTrainings.isEmpty()) {
-                    stateLiveData.value = HomeState(
-                        listTrainings = listOf(
-                            TrainingModel(
-                                idUser = idUser,
-                                id = "",
-                                name = "",
-                                description = "",
-                                data = "",
-                                isEmpty = true
-                            )
-                        )
-                    )
-                } else {
-                    val list : MutableList<TrainingModel> = mutableListOf()
-                    list.addAll(listTrainings)
-                    list.add(
-                        TrainingModel(
-                            idUser = idUser,
-                            id = "",
-                            name = "",
-                            description = "",
-                            data = "",
-                            isEmpty = true
-                        )
-                    )
-                    listTrainings.toList()
-                    stateLiveData.value = HomeState(listTrainings = list)
-                }
-
+                addTraining(listTrainings.toMutableList())
             }.onFailure {
 
             }
         }
-        return listOf()
+    }
+
+    fun tapOnTraining(training: TrainingModel) {
+        eventLiveData.value = HomeEvent.GoToTraining(training)
     }
 
     fun tapOnAddExercise(user: UserModel) {
         eventLiveData.value = HomeEvent.GoToCreateExercise
+    }
+
+    private fun addTraining(trainingModel: MutableList<TrainingModel>) {
+        stateLiveData.value = stateLiveData.value?.apply {
+            listTrainings.addAll(0, trainingModel)
+        }
     }
 }

@@ -31,24 +31,13 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_trainingFragment"
-            app:destination="@id/trainingFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_editTrainingFragment"
             app:destination="@id/editTrainingFragment" />
         <action
             android:id="@+id/action_homeFragment_to_createExerciseFragment"
             app:destination="@id/createExerciseFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/trainingFragment"
-        android:name="com.example.managertraining.presentation.ui.fragment.TrainingFragment"
-        android:label="TrainingFragment"
-        tools:layout="@layout/fragment_item_training">
-        <action
-            android:id="@+id/action_trainingFragment_to_editTrainingFragment"
-            app:destination="@id/editTrainingFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/editTrainingFragment"
         android:name="com.example.managertraining.presentation.ui.fragment.EditTrainingFragment"

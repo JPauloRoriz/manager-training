@@ -12,9 +12,9 @@ import com.example.managertraining.domain.usecase.login.LoginUseCaseImpl
 import com.example.managertraining.domain.usecase.login.contract.LoginUseCase
 import com.example.managertraining.domain.usecase.register.RegisterUseCaseImpl
 import com.example.managertraining.domain.usecase.register.contract.RegisterUseCase
+import com.example.managertraining.domain.usecase.training.CreateTrainingUseCaseImpl
 import com.example.managertraining.domain.usecase.training.DeleteTrainingUseCaseImpl
 import com.example.managertraining.domain.usecase.training.GetTrainingUseCaseImpl
-import com.example.managertraining.domain.usecase.training.CreateTrainingUseCaseImpl
 import com.example.managertraining.domain.usecase.training.UpdateTrainingUseCaseImpl
 import com.example.managertraining.domain.usecase.training.contract.CreateTrainingUseCase
 import com.example.managertraining.domain.usecase.training.contract.DeleteTrainingUseCase
@@ -24,7 +24,6 @@ import com.example.managertraining.presentation.viewmodel.edittraining.EditTrain
 import com.example.managertraining.presentation.viewmodel.home.HomeViewModel
 import com.example.managertraining.presentation.viewmodel.login.LoginViewModel
 import com.example.managertraining.presentation.viewmodel.register.RegisterViewModel
-import com.example.managertraining.presentation.viewmodel.training.TrainingViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -37,8 +36,7 @@ val appModule = module {
     //viewModel
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }
-    viewModel { TrainingViewModel() }
-    viewModel { HomeViewModel(get()) }
+    viewModel { params->  HomeViewModel(get(), params.get()) }
     viewModel { EditTrainingViewModel(get(), get(), get(), get()) }
 
     //useCase
