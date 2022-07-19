@@ -1,14 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragment.CreateExerciseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:background="@color/color_toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_erexcise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exercise"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/img_exercise"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="@dimen/dimen_3"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_add_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="@dimen/dimen_3"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@+id/img_exercise"
+        app:layout_constraintEnd_toEndOf="@+id/img_exercise"
+        app:layout_constraintStart_toStartOf="@+id/img_exercise"
+        app:layout_constraintTop_toTopOf="@+id/img_exercise" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_add_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_photo"
+        app:layout_constraintEnd_toEndOf="@+id/ic_add_image"
+        app:layout_constraintStart_toStartOf="@+id/ic_add_image"
+        app:layout_constraintTop_toBottomOf="@+id/ic_add_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_create_or_edit_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_3"
+        android:text="@string/tv_add_exercise"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_exercise" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_create_or_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_or_edit_exercise">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_name_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_h2"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/name_training"
+                app:layout_constraintStart_toStartOf="@+id/name_training"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_training"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="@dimen/dimen_3"
+                android:hint="@string/set_name_training"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_exercise">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_name_exercise"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:maxLines="1"
+                    android:padding="@dimen/dimen_3"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_1"
+                android:text="@string/edt_note"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_h2"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/note_exercise"
+                app:layout_constraintTop_toBottomOf="@+id/name_training" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/note_exercise"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_3"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:hint="@string/set_note_exercise"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/note">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_note_exercise"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="top"
+                    android:maxLines="3"
+                    android:padding="@dimen/dimen_3"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_or_edit"
+        style="@style/PrimaryButtonMaterial"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="@dimen/dimen_2"
+        android:layout_marginTop="@dimen/dimen_3"
+        android:text="@string/create_training"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

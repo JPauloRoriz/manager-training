@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.managertraining.domain.model.TrainingModel
+import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.domain.usecase.training.contract.GetTrainingsUseCase
 import com.example.managertraining.presentation.ui.fragment.TrainingFragment
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
@@ -40,8 +41,8 @@ class HomeViewModel(
                     list.addAll(listTrainings)
                     list.add(
                         TrainingModel(
-                            idUser = "",
-                            id = idUser,
+                            idUser = idUser,
+                            id = "",
                             name = "",
                             description = "",
                             data = "",
@@ -57,5 +58,9 @@ class HomeViewModel(
             }
         }
         return listOf()
+    }
+
+    fun tapOnAddExercise(user: UserModel) {
+        eventLiveData.value = HomeEvent.GoToCreateExercise
     }
 }

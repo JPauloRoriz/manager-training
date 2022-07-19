@@ -44,5 +44,10 @@
     <string name="yes">Sim</string>
     <string name="not">Não</string>
     <string name="training_delete_success">Treino excluído com sucesso</string>
+    <string name="add_photo">Adicionar foto</string>
+    <string name="exercise">Exercício</string>
+    <string name="tv_add_exercise">Adicionar exercicio</string>
+    <string name="edt_note">"Observações: "</string>
+    <string name="set_note_exercise">Digite observações sobre o treino</string>
 
 </resources>
