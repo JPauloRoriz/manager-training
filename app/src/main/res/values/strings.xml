@@ -28,9 +28,21 @@
     <string name="description">Descrição: </string>
     <string name="add_training">Adicionar treino</string>
     <string name="create_training">Criar treino</string>
-    <string name="name">Nome</string>
+    <string name="name">Nome: </string>
     <string name="example">Exemplo: Bíceps e Costas</string>
     <string name="edti_training">Editar Treino</string>
     <string name="name_day">Treino de %s</string>
+    <string name="login_not_realized">Não foi possível realizar seu login</string>
+    <string name="training_created_success">Treino criado com sucesso</string>
+    <string name="error_default">falha ao criar treino</string>
+    <string name="error_default_edit">falha ao editar treino</string>
+    <string name="set_name_training">Digite o nome do treino</string>
+    <string name="set_description_training">Digite a descrição do treino</string>
+    <string name="training_edit_success">Treino editado com sucesso</string>
+    <string name="atention">Atenção</string>
+    <string name="delete_training_message">Tem certeza que deseja excluir este treino?</string>
+    <string name="yes">Sim</string>
+    <string name="not">Não</string>
+    <string name="training_delete_success">Treino excluído com sucesso</string>
 
 </resources>

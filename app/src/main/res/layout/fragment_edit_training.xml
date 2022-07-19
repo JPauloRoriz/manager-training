@@ -14,19 +14,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-<RadioGroup
-    android:id="@+id/radio_group"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@+id/toolbar"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:orientation="horizontal"
-    android:gravity="center">
-
-
-</RadioGroup>
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_traing"
         android:layout_width="wrap_content"
@@ -42,12 +29,12 @@
         android:id="@+id/tv_name_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/black"
-        tools:text="Treino de Segunda-feira"
         android:layout_marginStart="@dimen/dimen_3"
-        android:textStyle="italic"/>
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="Treino de Segunda-feira" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_crieteOrEditTraining"
@@ -62,48 +49,103 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name_day" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_name"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_3"
-        android:layout_marginTop="@dimen/dimen_1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_day"
+        app:layout_constraintStart_toEndOf="@+id/tv_crieteOrEditTraining"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/shape_btn_delete"
+        app:layout_constraintHorizontal_bias="0.8"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:padding="@dimen/dimen_4"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="@dimen/text_h2"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_crieteOrEditTraining" />
+        app:layout_constraintBottom_toTopOf="@+id/name_training"
+        app:layout_constraintStart_toStartOf="@+id/name_training" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt_name_training"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_training"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="@dimen/dimen_3"
-        android:hint="@string/example"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        android:layout_marginTop="@dimen/dimen_1"
+        android:hint="@string/set_name_training"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_crieteOrEditTraining">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_name_training"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:maxLines="1"
+            android:padding="@dimen/dimen_3"
+            android:scrollHorizontally="true"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_description"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_1"
         android:text="@string/description"
+        android:layout_marginTop="@dimen/dimen_1"
         android:textColor="@color/black"
         android:textSize="@dimen/text_h2"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/edt_name_training" />
+        app:layout_constraintStart_toStartOf="@+id/description_training"
+        app:layout_constraintTop_toBottomOf="@+id/name_training" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt_description_training"
-        android:layout_width="match_parent"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description_training"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_3"
-        android:gravity="top"
-        android:hint="@string/example"
-        android:minLines="5"
-        app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+        android:layout_marginTop="@dimen/dimen_3"
+        android:hint="@string/set_description_training"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_description_training"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="top"
+            android:padding="@dimen/dimen_3"
+            android:scrollHorizontally="true"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_message_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_training"
+        app:layout_constraintVertical_bias="0.2"
+        tools:text="Por favor, preencha os campos" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_or_edit"
@@ -116,6 +158,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_description_training" />
+        app:layout_constraintTop_toBottomOf="@id/tv_message_error" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

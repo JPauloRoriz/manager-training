@@ -1,4 +1,4 @@
-package com.example.managertraining.data.repository.contract
+package com.example.managertraining.data.repository.user.contract
 
 import com.example.managertraining.domain.model.UserModel
 

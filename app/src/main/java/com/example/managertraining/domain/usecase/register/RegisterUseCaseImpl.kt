@@ -2,11 +2,10 @@ package com.example.managertraining.domain.usecase.register
 
 import android.content.Context
 import com.example.managertraining.R
-import com.example.managertraining.data.repository.contract.UserRepository
+import com.example.managertraining.data.repository.user.contract.UserRepository
 import com.example.managertraining.domain.exception.EmptyFildException
 import com.example.managertraining.domain.exception.PasswordLenghtException
 import com.example.managertraining.domain.exception.PasswordNotConfirmException
-import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.domain.usecase.register.contract.RegisterUseCase
 
 class RegisterUseCaseImpl(

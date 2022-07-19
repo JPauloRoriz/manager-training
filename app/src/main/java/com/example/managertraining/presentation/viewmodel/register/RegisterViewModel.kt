@@ -12,6 +12,7 @@ import com.example.managertraining.domain.usecase.register.contract.RegisterUseC
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterEvent
 import com.example.managertraining.presentation.viewmodel.register.model.RegisterState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
@@ -28,7 +29,7 @@ class RegisterViewModel(
         password: String,
         confirmPassword: String
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch{
             stateLiveData.setLoadingRegister(true)
             registerUseCase.invoke(
                 name = name,

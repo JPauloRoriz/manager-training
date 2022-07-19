@@ -1,6 +1,6 @@
-package com.example.managertraining.data.repository
+package com.example.managertraining.data.repository.user
 
-import com.example.managertraining.data.repository.contract.UserRepository
+import com.example.managertraining.data.repository.user.contract.UserRepository
 import com.example.managertraining.data.service.user.contract.UserService
 import com.example.managertraining.domain.exception.*
 import com.example.managertraining.domain.mapper.mapper

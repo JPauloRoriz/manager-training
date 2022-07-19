@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
                 is LoginEvent.SuccessLogin -> {
                     binding.edtPassword.text?.clear()
                     val bundle = bundleOf(HomeFragment.KEY_USER to event.user)
-                    findNavController().navigate(R.id.homeFragment, bundle)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundle)
                 }
                 LoginEvent.GoToRegister -> {
                     binding.edtLogin.text?.clear()
