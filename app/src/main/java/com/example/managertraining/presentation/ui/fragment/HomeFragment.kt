@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentHomeBinding
@@ -13,6 +14,7 @@ import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.presentation.ui.adapter.exercise.ExerciseAdapter
 import com.example.managertraining.presentation.ui.adapter.training.TrainingAdapter
+import com.example.managertraining.presentation.ui.extension.clearNavigationResult
 import com.example.managertraining.presentation.ui.extension.getNavigationResult
 import com.example.managertraining.presentation.viewmodel.home.HomeViewModel
 import com.example.managertraining.presentation.viewmodel.home.model.HomeEvent
@@ -63,8 +65,9 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
 
-        this.getNavigationResult<String>(KEY_TRAININGS)?.observe(viewLifecycleOwner) { idUser ->
-            viewModel.getTrainings(idUser)
+        this.getNavigationResult<String>(KEY_TRAININGS)?.observe(viewLifecycleOwner) {
+            viewModel.getTrainings()
+            clearNavigationResult<String>(KEY_TRAININGS)
         }
 
         viewModel.stateLiveData.observe(viewLifecycleOwner) { homeState ->

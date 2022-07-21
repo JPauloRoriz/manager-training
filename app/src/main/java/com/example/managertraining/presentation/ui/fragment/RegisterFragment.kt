@@ -47,6 +47,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupObservers() {
+
         viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
             binding.pbLoading.isVisible = state.isLoading
             binding.tvMessageError.text = state.messageError

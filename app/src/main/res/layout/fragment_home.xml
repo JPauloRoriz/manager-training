@@ -20,19 +20,19 @@
         android:id="@+id/tv_traing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/training"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        android:text="@string/training" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_day" />
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_name_day"
@@ -60,14 +60,13 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dimen_3"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:foregroundGravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line"
-        tools:listitem="@layout/item_exercise"/>
-
+        tools:listitem="@layout/item_exercise" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -77,8 +76,8 @@
         android:text="@string/training_empty"
         android:textColor="@color/black"
         android:textSize="@dimen/text_h3"
-        android:visibility="gone"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

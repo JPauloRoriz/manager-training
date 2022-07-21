@@ -13,24 +13,22 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getTrainingsModelUseCase: GetTrainingsUseCase,
-    user: UserModel
+    private val user: UserModel
 ) : ViewModel() {
 
     val stateLiveData = MutableLiveData(HomeState())
     val eventLiveData = SingleLiveEvent<HomeEvent>()
 
     init {
-        addTraining(
-            mutableListOf(TrainingModel(idUser = user.id))
-        )
-        getTrainings(user.id.toString())
+        refreshTrainingsWithButtonAdd(mutableListOf())
+        getTrainings()
     }
 
 
-    fun getTrainings(idUser: String) {
+    fun getTrainings() {
         viewModelScope.launch {
-            getTrainingsModelUseCase.getTrainings(idUser).onSuccess { listTrainings ->
-                addTraining(listTrainings.toMutableList())
+            getTrainingsModelUseCase.getTrainings(user.id.toString()).onSuccess { listTrainings ->
+                refreshTrainingsWithButtonAdd(listTrainings.toMutableList())
             }.onFailure {
 
             }
@@ -45,9 +43,12 @@ class HomeViewModel(
         eventLiveData.value = HomeEvent.GoToCreateExercise
     }
 
-    private fun addTraining(trainingModel: MutableList<TrainingModel>) {
+    private fun refreshTrainingsWithButtonAdd(trainingModel: MutableList<TrainingModel>) {
         stateLiveData.value = stateLiveData.value?.apply {
-            listTrainings.addAll(0, trainingModel)
+            listTrainings.clear()
+            listTrainings.addAll(trainingModel.apply {
+                add(TrainingModel(idUser = user.id.toString()))
+            })
         }
     }
 }

@@ -53,6 +53,7 @@ class EditTrainingViewModel(
         nameTraining: String,
         descriptionTraining: String
     ) {
+        updateDatas(nameTraining, descriptionTraining)
         return if (trainingIsEmpty) {
             createTraining(idUser, nameTraining, descriptionTraining)
         } else {
@@ -93,7 +94,6 @@ class EditTrainingViewModel(
 
         viewModelScope.launch {
             createTrainingUseCase.invoke(idUser, nameTraining, descriptionTraining).onSuccess {
-                stateLiveData.setLoading(false)
                 eventLiveData.value =
                     EditTrainingEvent.SuccessAddTraining(context.getString(R.string.training_created_success))
             }.onFailure { error ->
@@ -126,6 +126,16 @@ class EditTrainingViewModel(
                 stateLiveData.setLoading(false)
                 stateLiveData.setMessageError(it.message.toString())
             }
+        }
+    }
+
+    private fun updateDatas(
+        name: String,
+        descriptionTraining: String
+    ) {
+        stateLiveData.value?.apply {
+            nameTraining = name
+            description = descriptionTraining
         }
     }
 

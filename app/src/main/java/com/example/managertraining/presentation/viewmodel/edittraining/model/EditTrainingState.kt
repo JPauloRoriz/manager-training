@@ -6,6 +6,6 @@ data class EditTrainingState(
     val textOfButton: String = "",
     val nameDay : String = "",
     val title : String = "",
-    val nameTraining : String = "",
-    val description : String = ""
+    var nameTraining : String = "",
+    var description : String = ""
 )
