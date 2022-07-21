@@ -1,4 +1,4 @@
-package com.example.managertraining.presentation.viewmodel.edittraining.model
+package com.example.managertraining.presentation.viewmodel.training.model
 
 data class EditTrainingState(
     val isLoading : Boolean = false,

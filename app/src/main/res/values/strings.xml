@@ -49,5 +49,8 @@
     <string name="tv_add_exercise">Adicionar exercicio</string>
     <string name="edt_note">"Observações: "</string>
     <string name="set_note_exercise">Digite observações sobre o treino</string>
+    <string name="empty_image">Por favor, insira uma imagem do exercício</string>
+    <string name="exercise_add_success">Exercício adicionado com sucesso</string>
+    <string name="exercise_edited_success">Exercício editado com sucesso</string>
 
 </resources>

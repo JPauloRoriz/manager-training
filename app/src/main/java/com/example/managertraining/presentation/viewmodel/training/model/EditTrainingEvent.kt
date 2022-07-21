@@ -1,4 +1,4 @@
-package com.example.managertraining.presentation.viewmodel.edittraining.model
+package com.example.managertraining.presentation.viewmodel.training.model
 
 sealed class EditTrainingEvent {
     data class SuccessAddTraining(val message: String) : EditTrainingEvent()

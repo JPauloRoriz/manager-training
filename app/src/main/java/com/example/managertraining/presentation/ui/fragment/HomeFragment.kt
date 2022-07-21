@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentHomeBinding
@@ -24,7 +23,7 @@ import org.koin.core.parameter.parametersOf
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val user by lazy { arguments?.getSerializable(KEY_USER) as UserModel }
+    private val user by lazy { arguments?.getParcelable<UserModel>(KEY_USER) }
     private val viewModel by viewModel<HomeViewModel> {
         parametersOf(user)
     }
@@ -45,7 +44,6 @@ class HomeFragment : Fragment() {
         setupView()
         setupListeners()
         setupObservers()
-
     }
 
 
@@ -55,7 +53,8 @@ class HomeFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnFloating.setOnClickListener {
-//            viewModel.tapOnAddExercise( )
+            viewModel.tapOnAddExercise()
+            findNavController().navigate(R.id.action_homeFragment_to_ExerciseFragment)
         }
 
         clickTraining = {
@@ -72,7 +71,7 @@ class HomeFragment : Fragment() {
 
         viewModel.stateLiveData.observe(viewLifecycleOwner) { homeState ->
             val listFragments = homeState.listTrainings.map { trainingModel ->
-                TrainingFragment.newInstance(trainingModel).apply {
+                TrainingAdapterFragment.newInstance(trainingModel).apply {
                     clickTraining = this@HomeFragment.clickTraining
                 }
             }
@@ -83,17 +82,17 @@ class HomeFragment : Fragment() {
             when (event) {
                 is HomeEvent.GoToCreateExercise -> {
                     val bundle = bundleOf(
-                        CreateExerciseFragment.KEY_USER to user
+                        ExerciseFragment.KEY_TRAINING to TrainingModel()
                     )
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_createExerciseFragment,
+                        R.id.action_homeFragment_to_ExerciseFragment,
                         bundle
                     )
                 }
                 is HomeEvent.GoToTraining -> {
                     findNavController().navigate(
                         R.id.action_homeFragment_to_editTrainingFragment,
-                        bundleOf(EditTrainingFragment.KEY_TRAINING to event.training)
+                        bundleOf(TrainingFragment.KEY_TRAINING to event.training)
                     )
                 }
             }

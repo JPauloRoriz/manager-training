@@ -1,8 +1,9 @@
 package com.example.managertraining.data.model
 
 data class ExerciseResponse(
-    val id: String = "",
+    var id: String = "",
+    val name: String = "",
     val idTraining : String = "",
     val image : String = "",
-    val note : String
+    val note : String = ""
 )

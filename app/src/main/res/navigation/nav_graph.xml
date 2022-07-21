@@ -34,18 +34,18 @@
             android:id="@+id/action_homeFragment_to_editTrainingFragment"
             app:destination="@id/editTrainingFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_createExerciseFragment"
+            android:id="@+id/action_homeFragment_to_ExerciseFragment"
             app:destination="@id/createExerciseFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/editTrainingFragment"
-        android:name="com.example.managertraining.presentation.ui.fragment.EditTrainingFragment"
+        android:name="com.example.managertraining.presentation.ui.fragment.TrainingFragment"
         android:label="fragment_edit_training"
-        tools:layout="@layout/fragment_edit_training" />
+        tools:layout="@layout/fragment_training" />
     <fragment
         android:id="@+id/createExerciseFragment"
-        android:name="com.example.managertraining.presentation.ui.fragment.CreateExerciseFragment"
+        android:name="com.example.managertraining.presentation.ui.fragment.ExerciseFragment"
         android:label="fragment_create_exercise"
-        tools:layout="@layout/fragment_create_exercise" />
+        tools:layout="@layout/fragment_exercise" />
 </navigation>

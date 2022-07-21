@@ -39,7 +39,7 @@ class HomeViewModel(
         eventLiveData.value = HomeEvent.GoToTraining(training)
     }
 
-    fun tapOnAddExercise(user: UserModel) {
+    fun tapOnAddExercise() {
         eventLiveData.value = HomeEvent.GoToCreateExercise
     }
 

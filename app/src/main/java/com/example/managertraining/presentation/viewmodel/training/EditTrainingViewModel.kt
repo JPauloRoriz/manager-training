@@ -1,4 +1,4 @@
-package com.example.managertraining.presentation.viewmodel.edittraining
+package com.example.managertraining.presentation.viewmodel.training
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +12,8 @@ import com.example.managertraining.domain.usecase.training.contract.CreateTraini
 import com.example.managertraining.domain.usecase.training.contract.DeleteTrainingUseCase
 import com.example.managertraining.domain.usecase.training.contract.UpdateTrainingUseCase
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
-import com.example.managertraining.presentation.viewmodel.edittraining.model.EditTrainingEvent
-import com.example.managertraining.presentation.viewmodel.edittraining.model.EditTrainingState
+import com.example.managertraining.presentation.viewmodel.training.model.EditTrainingEvent
+import com.example.managertraining.presentation.viewmodel.training.model.EditTrainingState
 import kotlinx.coroutines.launch
 import java.io.IOException
 
