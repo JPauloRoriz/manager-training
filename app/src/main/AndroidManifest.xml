@@ -17,6 +17,8 @@
         android:theme="@style/Theme.ManagerTraining"
         tools:targetApi="31">
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             android:name=".presentation.ui.MainActivity"
             android:exported="true">
             <intent-filter>

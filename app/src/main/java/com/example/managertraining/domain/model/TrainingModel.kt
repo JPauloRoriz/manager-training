@@ -9,6 +9,6 @@ data class TrainingModel(
     val idUser: String? = "",
     val name: String = "",
     val description: String = "",
-    val data: String = "",
+    val data: Long = 0,
     var isEmpty: Boolean = true
 ) : Parcelable

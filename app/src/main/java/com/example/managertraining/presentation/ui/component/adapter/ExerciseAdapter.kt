@@ -1,4 +1,4 @@
-package com.example.managertraining.presentation.ui.adapter.exercise
+package com.example.managertraining.presentation.ui.component.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.managertraining.databinding.ItemExerciseBinding
 import com.example.managertraining.domain.model.ExerciseModel
-import com.example.managertraining.presentation.ui.adapter.exercise.viewholder.ExerciseViewHolder
+import com.example.managertraining.presentation.ui.component.adapter.exercise.viewholder.ExerciseViewHolder
 
-class ExerciseAdapter() : ListAdapter<ExerciseModel, ExerciseViewHolder>(COMPARATOR) {
-    var clickExercise: ((String) -> Unit)? = null
+class ExerciseAdapter : ListAdapter<ExerciseModel, ExerciseViewHolder>(COMPARATOR) {
+    var clickExercise: ((ExerciseModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         return ExerciseViewHolder(
@@ -18,7 +18,7 @@ class ExerciseAdapter() : ListAdapter<ExerciseModel, ExerciseViewHolder>(COMPARA
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[position], clickExercise)
     }
 
     override fun getItemCount(): Int {

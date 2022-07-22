@@ -13,7 +13,7 @@ class UpdateExerciseUseCaseImpl(
     private val repository: ExerciseRepository,
     private val context: Context
 ) : UpdateExerciseUseCase {
-    override suspend fun invoke(idExercise: String, name : String, note : String): Result<Any?> {
+    override suspend fun invoke(idExercise: String, name: String, note: String, image: String): Result<Any?> {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
@@ -23,7 +23,7 @@ class UpdateExerciseUseCaseImpl(
         } else if (!isConnected) {
             Result.failure(NoConnectionInternetException())
         } else {
-            repository.updateExercise(idExercise, name, note)
+            repository.updateExercise(idExercise, name, note, image)
         }
     }
 }

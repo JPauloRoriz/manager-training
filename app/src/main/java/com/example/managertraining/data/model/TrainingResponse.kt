@@ -7,5 +7,5 @@ data class TrainingResponse(
     val idUser: String? = "",
     val name: String = "",
     val description: String = "",
-    val data: String = ""
+    val data: Long = 0
 )

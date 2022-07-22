@@ -29,8 +29,8 @@ class ExerciseRepositoryImpl(
         }
     }
 
-    override suspend fun deleteExercise(idTraining: String): Result<Any?> {
-        return exerciseService.deleteExercise(idTraining).recoverCatching { error ->
+    override suspend fun deleteExercise(idExercise: String): Result<Any?> {
+        return exerciseService.deleteExercise(idExercise).recoverCatching { error ->
             return when (error) {
                 is IOException -> Result.failure(NoConnectionInternetException())
                 is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
@@ -42,9 +42,10 @@ class ExerciseRepositoryImpl(
     override suspend fun updateExercise(
         idExercise: String,
         name: String,
-        note: String
+        note: String,
+        image: String
     ): Result<Any?> {
-        return exerciseService.updateExercise(idExercise, name, note).recoverCatching { error ->
+        return exerciseService.updateExercise(idExercise, name, note, image).recoverCatching { error ->
             return when (error) {
                 is IOException -> Result.failure(NoConnectionInternetException())
                 is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())

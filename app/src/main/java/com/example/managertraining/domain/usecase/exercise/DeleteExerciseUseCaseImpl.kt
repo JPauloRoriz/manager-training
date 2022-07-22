@@ -11,15 +11,15 @@ class DeleteExerciseUseCaseImpl(
     private val context : Context,
     private val repository : ExerciseRepository
 ) : DeleteExerciseUseCase {
-    override suspend fun invoke(idTraining: String): Result<Any?> {
+    override suspend fun invoke(idExercise: String): Result<Any?> {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
-      return  if(isConnected){
+      return  if(!isConnected){
             Result.failure(NoConnectionInternetException())
         }else {
-            repository.deleteExercise(idTraining)
+            repository.deleteExercise(idExercise)
       }
     }
 }

@@ -15,16 +15,13 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_delete"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_3"
-        android:layout_marginEnd="@dimen/dimen_1"
-        android:background="@drawable/shape_btn_delete"
-        android:padding="@dimen/dimen_4"
         android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/img_exercise"
-        app:layout_constraintTop_toTopOf="@+id/img_exercise" />
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_erexcise"
@@ -33,67 +30,75 @@
         android:text="@string/exercise"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
-        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="@id/btn_delete"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/img_exercise"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="@dimen/dimen_3"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:src="@tools:sample/backgrounds/scenic" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_add_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="@dimen/dimen_3"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@+id/img_exercise"
-        app:layout_constraintEnd_toEndOf="@+id/img_exercise"
-        app:layout_constraintStart_toStartOf="@+id/img_exercise"
-        app:layout_constraintTop_toTopOf="@+id/img_exercise" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_add_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_photo"
-        app:layout_constraintEnd_toEndOf="@+id/ic_add_image"
-        app:layout_constraintStart_toStartOf="@+id/ic_add_image"
-        app:layout_constraintTop_toBottomOf="@+id/ic_add_image" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_create_or_edit_exercise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_3"
-        android:text="@string/tv_add_exercise"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_h2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_exercise" />
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="160dp"
+        android:layout_marginTop="@dimen/dimen_3"
         app:layout_constraintBottom_toTopOf="@+id/btn_create_or_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_create_or_edit_exercise">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/img_exercise"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="@dimen/dimen_3"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ic_add_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="@dimen/dimen_3"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toBottomOf="@+id/img_exercise"
+                app:layout_constraintEnd_toEndOf="@+id/img_exercise"
+                app:layout_constraintStart_toStartOf="@+id/img_exercise"
+                app:layout_constraintTop_toTopOf="@+id/img_exercise" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_photo"
+                app:layout_constraintEnd_toEndOf="@+id/ic_add_image"
+                app:layout_constraintStart_toStartOf="@+id/ic_add_image"
+                app:layout_constraintTop_toBottomOf="@+id/ic_add_image" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_create_or_edit_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:text="@string/tv_add_exercise"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_h2"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_exercise" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_name_exercise"
@@ -105,7 +110,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/name_training"
                 app:layout_constraintStart_toStartOf="@+id/name_training"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_create_or_edit_exercise" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -162,12 +167,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_note_exercise"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="wrap_content"
                     android:gravity="top"
+                    android:lines="3"
                     android:maxLines="3"
                     android:padding="@dimen/dimen_3"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -186,8 +190,7 @@
         android:text="@string/create_training"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -43,8 +43,8 @@ class TrainingRepositoryImpl(
     }
 
     override suspend fun getTrainings(idUser: String): Result<List<TrainingModel>> {
-        return trainingService.getTrainings(idUser).map { it ->
-            it.map { trainingResponse ->
+        return trainingService.getTrainings(idUser).map { list ->
+            list.map { trainingResponse ->
                 TrainingModel(
                     trainingResponse.id,
                     trainingResponse.idUser,
@@ -53,7 +53,7 @@ class TrainingRepositoryImpl(
                     trainingResponse.data,
                     false
                 )
-            }
+            }.sortedBy { it.data }
         }.recoverCatching { exception ->
             return when (exception) {
                 is IOException -> Result.failure(NoConnectionInternetException())

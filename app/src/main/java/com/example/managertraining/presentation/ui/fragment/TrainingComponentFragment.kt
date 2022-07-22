@@ -13,11 +13,11 @@ import com.example.managertraining.databinding.FragmentItemTrainingBinding
 import com.example.managertraining.domain.model.TrainingModel
 
 
-class TrainingAdapterFragment : Fragment() {
+class TrainingComponentFragment : Fragment() {
     private lateinit var binding: FragmentItemTrainingBinding
     var isEmpty: Boolean = false
     var clickTraining: ((TrainingModel) -> Unit)? = null
-    private val training by lazy { arguments?.getParcelable<TrainingModel>(KEY_TRAINING) }
+    val training by lazy { arguments?.getParcelable<TrainingModel>(KEY_TRAINING) }
 
 
     override fun onCreateView(
@@ -50,12 +50,11 @@ class TrainingAdapterFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(trainingModel: TrainingModel): TrainingAdapterFragment {
-
+        fun newInstance(trainingModel: TrainingModel): TrainingComponentFragment {
             val args = Bundle().apply {
                 putParcelable(KEY_TRAINING, trainingModel)
             }
-            val fragment = TrainingAdapterFragment()
+            val fragment = TrainingComponentFragment()
             fragment.arguments = args
             return fragment
         }

@@ -1,8 +1,13 @@
 package com.example.managertraining.presentation.viewmodel.exercise.model
 
-import com.example.managertraining.domain.model.ExerciseModel
-
 data class ExerciseState(
-    val isLoading : Boolean = false,
-    val messageError : String = "false"
+    val isLoading: Boolean = false,
+    val showTrash: Boolean = false,
+    val showIcAdd: Boolean = true,
+    val showTextAdd: Boolean = true,
+    val textButtonConfirm: String = "",
+    val textTitleAction: String = "",
+    var nameExercise: String? = "",
+    var noteExercise: String? = "",
+    var imageExercise : String? = ""
 )

@@ -5,6 +5,7 @@ import com.example.managertraining.data.service.training.contract.TrainingServic
 import com.example.managertraining.domain.exception.DefaultException
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import java.util.*
 
 class TrainingFirebaseService(
     private val firestore: FirebaseFirestore
@@ -26,7 +27,7 @@ class TrainingFirebaseService(
                 idUser = idUser,
                 name = nameTraining,
                 description = descriptionTraining,
-                data = ""
+                data = Date().time
             )
             trainingFirebase.document(idTraining).set(newTraining).await()
             Result.success(null)

@@ -1,7 +1,6 @@
 package com.example.managertraining.data.service.exercise
 
 import com.example.managertraining.data.model.ExerciseResponse
-import com.example.managertraining.data.model.TrainingResponse
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -23,9 +22,9 @@ class ExerciseFirebaseService(
         }
     }
 
-    override suspend fun deleteExercise(idTraining: String): Result<Any?> {
+    override suspend fun deleteExercise(idExercise: String): Result<Any?> {
         return try {
-            exerciseFirebase.document(idTraining).delete().await()
+            exerciseFirebase.document(idExercise).delete().await()
             Result.success(null)
         } catch (exception: Exception) {
             Result.failure(exception)
@@ -35,13 +34,15 @@ class ExerciseFirebaseService(
     override suspend fun updateExercise(
         idExercise: String,
         name: String,
-        note: String
+        note: String,
+        image: String
     ): Result<Any?> {
         return try {
             exerciseFirebase.document(idExercise)
                 .update(
                     "name", name,
-                    "note", note
+                    "note", note,
+                    "image", image
                 ).await()
             Result.success(null)
         } catch (exception: Exception) {
