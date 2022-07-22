@@ -55,5 +55,6 @@
     <string name="create_exercise">Criar Exercício</string>
     <string name="edit_exercise">Editar Exercício</string>
     <string name="exercise_deleted_success">Exercicio deletado com sucesso</string>
+    <string name="home">Home</string>
 
 </resources>

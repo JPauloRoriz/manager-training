@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/backgroundTop"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorSecundary"
+            android:layout_width="match_parent"
+            app:layout_constraintHeight_percent="0.4"
+            android:layout_height="0dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name_training"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_h1"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundTop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backgroundTop"
+            tools:text="Braço" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_description_editable"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center|start"
+            android:maxLines="4"
+            android:layout_margin="@dimen/dimen_3"
+            android:textSize="@dimen/text_h3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backgroundTop"
+            tools:text="Malhar segunda de manhã, fazer na ordem que o professor pediu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

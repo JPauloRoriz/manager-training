@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.red
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentItemTrainingBinding
 import com.example.managertraining.domain.model.TrainingModel
 
@@ -34,18 +31,16 @@ class TrainingComponentFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.tvNameTraining.text = training?.name
-        binding.tvDescriptionEditable.text = training?.description
-        binding.root.setOnClickListener {
+        binding.training.tvNameTraining.text = training?.name
+        binding.training.tvDescriptionEditable.text = training?.description
+        binding.training.root.setOnClickListener {
             training?.let { training -> clickTraining?.invoke(training) }
         }
-        binding.trainingIsEmpty.root.isVisible = isEmpty
-
-        if (this.training?.isEmpty == true) {
-            binding.tvDescription.isGone = true
-            binding.trainingIsEmpty.root.isVisible = true
-            binding.root.setCardBackgroundColor(R.color.tranparent_empty.red)
+        binding.trainingIsEmpty.root.setOnClickListener {
+            training?.let { training -> clickTraining?.invoke(training) }
         }
+        binding.training.root.isVisible = training?.isEmpty == false
+        binding.trainingIsEmpty.root.isVisible = training?.isEmpty == true
     }
 
 

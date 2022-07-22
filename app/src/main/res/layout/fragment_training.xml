@@ -52,15 +52,14 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_delete"
+        style="@style/SecundaryButtonMaterial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_day"
-        app:layout_constraintStart_toEndOf="@+id/tv_crieteOrEditTraining"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
         android:background="@drawable/shape_btn_delete"
-        app:layout_constraintHorizontal_bias="0.8"
-        android:src="@drawable/ic_baseline_delete_24"
-        android:padding="@dimen/dimen_4"/>
+        android:src="@drawable/ic_baseline_delete_24" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

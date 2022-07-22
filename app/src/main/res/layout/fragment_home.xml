@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="90dp"
         android:background="@color/color_toolbar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,8 +20,11 @@
         android:id="@+id/tv_traing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/training"
+        android:text="@string/home"
         android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_h1"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="@id/toolbar"
@@ -29,31 +32,12 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
+        tools:background="@color/slow_gray"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_day" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_name_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_3"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_h1"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:text="Quarta-feira" />
-
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/dimen_3"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/viewpager" />
+        android:layout_marginTop="-30dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_exercise"
@@ -61,14 +45,14 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/dimen_3"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/dimen_1"
         android:foregroundGravity="center"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/dimen_1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintTop_toBottomOf="@+id/viewpager"
         tools:listitem="@layout/item_exercise" />
 
 
@@ -90,8 +74,8 @@
         android:id="@+id/btn_floating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_3"
-        android:backgroundTint="#00BCD4"
+        android:layout_margin="@dimen/dimen_2"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

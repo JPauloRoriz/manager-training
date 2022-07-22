@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FF5722</color>
+    <color name="colorSecundary">#F6A186</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red_color">#F60707</color>
+    <color name="slow_gray">#E9E4E4E4</color>
     <color name="color_primary_light">#173F51B5</color>
-    <color name="color_toolbar">#6B2196F3</color>
+    <color name="color_toolbar">#FF5722</color>
     <color name="color_item_training">#060B25</color>
     <color name="training_empty">#1B000000</color>
     <color name="tranparent_empty">#00FFFFFF</color>

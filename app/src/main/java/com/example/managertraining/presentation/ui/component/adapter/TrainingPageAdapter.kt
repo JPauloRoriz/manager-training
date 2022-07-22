@@ -24,9 +24,9 @@ class TrainingPageAdapter(
     fun submitList(newItems: List<TrainingModel>) {
         val callback = PagerDiffUtil(this.items.toList(), newItems)
         val diff = DiffUtil.calculateDiff(callback)
-        this.items.clear()
-        this.items.addAll(newItems)
+        this.items = ArrayList(newItems)
         diff.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
 }

@@ -68,15 +68,13 @@ class ExerciseFragment : Fragment() {
             binding.btnDelete.isGone = !state.showTrash
             binding.edtNameExercise.setText(state.nameExercise)
             binding.edtNoteExercise.setText(state.noteExercise)
-            if (exercise?.image.isNullOrEmpty()) {
+            if (!exercise?.image.isNullOrEmpty()) {
                 Glide.with(requireContext())
                     .load(exercise?.image)
                     .error(R.drawable.ic_image_empty)
                     .placeholder(R.drawable.ic_image_empty)
                     .fitCenter()
                     .into(binding.imgExercise)
-            } else {
-                binding.imgExercise.setImageResource(R.drawable.ic_image_empty)
             }
         }
 

@@ -9,12 +9,15 @@
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/drawable/ic_user_icon.xml" value="0.105" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/ManagerTraining/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1375" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/drawable/ic_image_empty.xml" value="0.134" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_exercise.xml" value="0.18" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_item_training.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_item_training.xml" value="0.25" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/fragment_training.xml" value="0.22" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/item_exercise.xml" value="0.2" />
+        <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/item_training.xml" value="0.203125" />
         <entry key="..\:/Users/joaop/AndroidStudioProjects/training-management/app/src/main/res/layout/item_training_empty.xml" value="0.20416666666666666" />
       </map>
     </option>

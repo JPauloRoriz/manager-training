@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
     var clickTraining: ((TrainingModel) -> Unit)? = null
     private val exerciseAdapter by lazy { ExerciseAdapter() }
-    private lateinit var trainingAdapter : TrainingPageAdapter
+    private lateinit var trainingAdapter: TrainingPageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,9 +125,6 @@ class HomeFragment : Fragment() {
                         R.id.action_homeFragment_to_editTrainingFragment,
                         bundleOf(TrainingFragment.KEY_TRAINING to event.training)
                     )
-                }
-                HomeEvent.GoToInitList -> {
-                    binding.viewpager.currentItem = 0
                 }
             }
         }
