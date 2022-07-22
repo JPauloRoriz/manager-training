@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentHomeBinding
+import com.example.managertraining.domain.model.ExerciseModel
 import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.domain.model.UserModel
 import com.example.managertraining.presentation.ui.adapter.exercise.ExerciseAdapter
@@ -24,6 +25,7 @@ import org.koin.core.parameter.parametersOf
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val user by lazy { arguments?.getParcelable<UserModel>(KEY_USER) }
+    private lateinit var listFragments: List<TrainingAdapterFragment>
     private val viewModel by viewModel<HomeViewModel> {
         parametersOf(user)
     }
@@ -41,20 +43,24 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView()
         setupListeners()
         setupObservers()
+        setupView()
     }
 
 
     private fun setupView() {
         binding.rvExercise.adapter = exerciseAdapter
+       var trainingModel = TrainingModel()
+        viewModel.stateLiveData.observe(viewLifecycleOwner){
+          trainingModel =  it.listTrainings[binding.viewpager.currentItem]
+        }
+        viewModel.getExercise(trainingModel)
     }
 
     private fun setupListeners() {
         binding.btnFloating.setOnClickListener {
             viewModel.tapOnAddExercise()
-            findNavController().navigate(R.id.action_homeFragment_to_ExerciseFragment)
         }
 
         clickTraining = {
@@ -69,13 +75,16 @@ class HomeFragment : Fragment() {
             clearNavigationResult<String>(KEY_TRAININGS)
         }
 
+
         viewModel.stateLiveData.observe(viewLifecycleOwner) { homeState ->
-            val listFragments = homeState.listTrainings.map { trainingModel ->
+            listFragments = homeState.listTrainings.map { trainingModel ->
                 TrainingAdapterFragment.newInstance(trainingModel).apply {
                     clickTraining = this@HomeFragment.clickTraining
                 }
             }
             binding.viewpager.adapter = TrainingAdapter(this, listFragments)
+
+            exerciseAdapter.currentList.addAll(homeState.listExercises)
         }
 
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->

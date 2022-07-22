@@ -14,8 +14,10 @@ import com.example.managertraining.data.service.user.UserFirebaseService
 import com.example.managertraining.data.service.user.contract.UserService
 import com.example.managertraining.domain.usecase.exercise.CreateExerciseUseCaseImpl
 import com.example.managertraining.domain.usecase.exercise.DeleteExerciseUseCaseImpl
+import com.example.managertraining.domain.usecase.exercise.GetExerciseUseCaseImpl
 import com.example.managertraining.domain.usecase.exercise.contract.CreateExerciseUseCase
 import com.example.managertraining.domain.usecase.exercise.contract.DeleteExerciseUseCase
+import com.example.managertraining.domain.usecase.exercise.contract.GetExerciseUseCase
 import com.example.managertraining.domain.usecase.login.LoginUseCaseImpl
 import com.example.managertraining.domain.usecase.login.contract.LoginUseCase
 import com.example.managertraining.domain.usecase.register.RegisterUseCaseImpl
@@ -45,12 +47,13 @@ val appModule = module {
     //viewModel
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }
-    viewModel { params -> HomeViewModel(get(), params.get()) }
+    viewModel { params -> HomeViewModel(get(), get(), params.get()) }
     viewModel { EditTrainingViewModel(get(), get(), get(), get()) }
     viewModel { params ->
         ExerciseViewModel(
             exercise = params[0],
             training = params[1],
+            get(),
             get(),
             get(),
             get()
@@ -66,6 +69,7 @@ val appModule = module {
     factory<CreateTrainingUseCase> { CreateTrainingUseCaseImpl(get(), get()) }
     factory<UpdateTrainingUseCase> { UpdateTrainingUseCaseImpl(get(), get()) }
     factory<DeleteExerciseUseCase> { DeleteExerciseUseCaseImpl(get(), get()) }
+    factory<GetExerciseUseCase> { GetExerciseUseCaseImpl(get()) }
 
     //repository
     factory<UserRepository> { UserRepositoryImpl(get()) }

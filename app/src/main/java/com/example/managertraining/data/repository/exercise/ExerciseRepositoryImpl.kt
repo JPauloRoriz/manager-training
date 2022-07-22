@@ -5,6 +5,7 @@ import com.example.managertraining.data.repository.exercise.contract.ExerciseRep
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
 import com.example.managertraining.domain.exception.DefaultException
 import com.example.managertraining.domain.exception.NoConnectionInternetException
+import com.example.managertraining.domain.model.ExerciseModel
 import com.google.firebase.FirebaseNetworkException
 import java.io.IOException
 
@@ -43,12 +44,32 @@ class ExerciseRepositoryImpl(
         name: String,
         note: String
     ): Result<Any?> {
-       return exerciseService.updateExercise(idExercise, name, note).recoverCatching { error ->
-           return when (error) {
-               is IOException -> Result.failure(NoConnectionInternetException())
-               is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
-               else -> Result.failure(DefaultException())
-           }
-       }
+        return exerciseService.updateExercise(idExercise, name, note).recoverCatching { error ->
+            return when (error) {
+                is IOException -> Result.failure(NoConnectionInternetException())
+                is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
+                else -> Result.failure(DefaultException())
+            }
+        }
+    }
+
+    override suspend fun getExercises(idTrainings: String): Result<List<ExerciseModel>> {
+        return exerciseService.getExercises(idTrainings).map { listExerciseResponse ->
+            listExerciseResponse.map { exerciseResponse ->
+                ExerciseModel(
+                    id = exerciseResponse.id,
+                    idTraining = exerciseResponse.idTraining,
+                    name = exerciseResponse.name,
+                    image = exerciseResponse.image,
+                    note = exerciseResponse.note
+                )
+            }
+        }.recoverCatching { exception ->
+            return when (exception) {
+                is IOException -> Result.failure(NoConnectionInternetException())
+                is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
+                else -> Result.failure(DefaultException())
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ import com.example.managertraining.domain.model.ExerciseModel
 import com.example.managertraining.presentation.ui.adapter.exercise.viewholder.ExerciseViewHolder
 
 class ExerciseAdapter() : ListAdapter<ExerciseModel, ExerciseViewHolder>(COMPARATOR) {
-    var clickProfile: ((String) -> Unit)? = null
+    var clickExercise: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         return ExerciseViewHolder(

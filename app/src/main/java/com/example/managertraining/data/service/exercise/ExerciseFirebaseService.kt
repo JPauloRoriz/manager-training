@@ -1,6 +1,7 @@
 package com.example.managertraining.data.service.exercise
 
 import com.example.managertraining.data.model.ExerciseResponse
+import com.example.managertraining.data.model.TrainingResponse
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -43,6 +44,18 @@ class ExerciseFirebaseService(
                     "note", note
                 ).await()
             Result.success(null)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
+    }
+
+    override suspend fun getExercises(idTrainings: String): Result<List<ExerciseResponse>> {
+        return try {
+            val exercise = exerciseFirebase.whereEqualTo("idTraining", idTrainings).get().await()
+            exercise.toObjects(ExerciseResponse::class.java).let{
+                return Result.success(it)
+            }
+
         } catch (exception: Exception) {
             Result.failure(exception)
         }

@@ -77,7 +77,7 @@ class ExerciseFragment : Fragment() {
 
     companion object {
         const val KEY_TRAINING: String = "training"
-        const val KEY_EXERCISE: String = "training"
+        const val KEY_EXERCISE: String = "exercise"
     }
 
 

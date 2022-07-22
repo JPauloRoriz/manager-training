@@ -51,6 +51,7 @@ class TrainingAdapterFragment : Fragment() {
 
     companion object {
         fun newInstance(trainingModel: TrainingModel): TrainingAdapterFragment {
+
             val args = Bundle().apply {
                 putParcelable(KEY_TRAINING, trainingModel)
             }
