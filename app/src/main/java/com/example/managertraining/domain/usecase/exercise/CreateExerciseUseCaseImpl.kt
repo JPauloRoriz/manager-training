@@ -6,7 +6,6 @@ import android.net.NetworkInfo
 import com.example.managertraining.R
 import com.example.managertraining.data.repository.exercise.contract.ExerciseRepository
 import com.example.managertraining.domain.exception.EmptyFildException
-import com.example.managertraining.domain.exception.ImageIsEmptyException
 import com.example.managertraining.domain.exception.NoConnectionInternetException
 import com.example.managertraining.domain.usecase.exercise.contract.CreateExerciseUseCase
 

@@ -36,6 +36,8 @@
     <string name="training_created_success">Treino criado com sucesso</string>
     <string name="error_default">falha ao criar treino</string>
     <string name="error_default_edit">falha ao editar treino</string>
+    <string name="error_default_exercise">falha ao editar exercicio</string>
+    <string name="error_default_crate_exercise">falha ao criar exercicio</string>
     <string name="set_name_training">Digite o nome do treino</string>
     <string name="set_description_training">Digite a descrição do treino</string>
     <string name="training_edit_success">Treino editado com sucesso</string>
@@ -56,5 +58,12 @@
     <string name="edit_exercise">Editar Exercício</string>
     <string name="exercise_deleted_success">Exercicio deletado com sucesso</string>
     <string name="home">Home</string>
+    <string name="choose_photo_using">Escolha a foto</string>
+    <string name="action_close">Sair</string>
+    <string name="camera">Usar a camera</string>
+    <string name="gallery">Acessar a galeria</string>
+    <string name="remove_photo">Remover foto</string>
+    <string name="error_loading_trainings">Ocorreu um erro ao carregar os treinos</string>
+    <string name="error_loading_exercises">Erro ao carregar os exercicios deste treino</string>
 
 </resources>

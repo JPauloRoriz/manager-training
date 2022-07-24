@@ -1,5 +1,6 @@
 package com.example.managertraining.data.repository.exercise
 
+import android.net.Uri
 import com.example.managertraining.data.model.ExerciseResponse
 import com.example.managertraining.data.repository.exercise.contract.ExerciseRepository
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
@@ -45,13 +46,14 @@ class ExerciseRepositoryImpl(
         note: String,
         image: String
     ): Result<Any?> {
-        return exerciseService.updateExercise(idExercise, name, note, image).recoverCatching { error ->
-            return when (error) {
-                is IOException -> Result.failure(NoConnectionInternetException())
-                is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
-                else -> Result.failure(DefaultException())
+        return exerciseService.updateExercise(idExercise, name, note, image)
+            .recoverCatching { error ->
+                return when (error) {
+                    is IOException -> Result.failure(NoConnectionInternetException())
+                    is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
+                    else -> Result.failure(DefaultException())
+                }
             }
-        }
     }
 
     override suspend fun getExercises(idTrainings: String): Result<List<ExerciseModel>> {
@@ -66,6 +68,20 @@ class ExerciseRepositoryImpl(
                 )
             }
         }.recoverCatching { exception ->
+            return when (exception) {
+                is IOException -> Result.failure(NoConnectionInternetException())
+                is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
+                else -> Result.failure(DefaultException())
+            }
+        }
+    }
+
+    override suspend fun deleteAllExercisesOfTraining(idTraining: String) {
+        exerciseService.deleteAllExercisesOfTraining(idTraining)
+    }
+
+    override suspend fun saveImageExercise(data: Uri?): Result<String?> {
+        return exerciseService.saveImageExercise(data).recoverCatching { exception ->
             return when (exception) {
                 is IOException -> Result.failure(NoConnectionInternetException())
                 is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())

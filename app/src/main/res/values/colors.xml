@@ -8,6 +8,7 @@
     <color name="slow_gray">#E9E4E4E4</color>
     <color name="color_primary_light">#173F51B5</color>
     <color name="color_toolbar">#FF5722</color>
+    <color name="color_black_light">#85000000</color>
     <color name="color_item_training">#060B25</color>
     <color name="training_empty">#1B000000</color>
     <color name="tranparent_empty">#00FFFFFF</color>

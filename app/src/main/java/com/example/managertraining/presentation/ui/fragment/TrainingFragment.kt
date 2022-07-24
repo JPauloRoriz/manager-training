@@ -15,14 +15,14 @@ import com.example.managertraining.databinding.FragmentTrainingBinding
 import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.presentation.ui.extension.setNavigationResult
 import com.example.managertraining.presentation.ui.fragment.HomeFragment.Companion.KEY_TRAININGS
-import com.example.managertraining.presentation.viewmodel.training.EditTrainingViewModel
+import com.example.managertraining.presentation.viewmodel.training.TrainingViewModel
 import com.example.managertraining.presentation.viewmodel.training.model.EditTrainingEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class TrainingFragment : Fragment() {
     private lateinit var binding: FragmentTrainingBinding
-    private val viewModel by viewModel<EditTrainingViewModel>()
+    private val viewModel by viewModel<TrainingViewModel>()
     private val training by lazy { arguments?.getParcelable(KEY_TRAINING) ?: TrainingModel() }
 
 
@@ -86,12 +86,11 @@ class TrainingFragment : Fragment() {
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is EditTrainingEvent.SuccessAddTraining -> {
-                    binding.progressBar.isVisible = false
                     this.setNavigationResult(
                         training.idUser.toString(),
                         KEY_TRAININGS
                     )
-                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
                 is EditTrainingEvent.SuccessDeleteTraining -> {
@@ -99,7 +98,7 @@ class TrainingFragment : Fragment() {
                         training.idUser.toString(),
                         KEY_TRAININGS
                     )
-                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
             }

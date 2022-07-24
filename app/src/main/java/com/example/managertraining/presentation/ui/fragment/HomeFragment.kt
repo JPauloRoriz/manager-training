@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -18,6 +20,7 @@ import com.example.managertraining.presentation.ui.extension.clearNavigationResu
 import com.example.managertraining.presentation.ui.extension.getNavigationResult
 import com.example.managertraining.presentation.viewmodel.home.HomeViewModel
 import com.example.managertraining.presentation.viewmodel.home.model.HomeEvent
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -106,11 +109,14 @@ class HomeFragment : Fragment() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) { homeState ->
             trainingAdapter.submitList(homeState.listTrainings)
             exerciseAdapter.submitList(homeState.listExercises)
+            binding.tvExerciseEmpty.isVisible = homeState.messageExerciseEmpty
+            binding.progressBarTraining.isGone = !homeState.isLoadingTraining
+            binding.progressBarExercise.isGone = !homeState.isLoadingExercise
         }
 
         viewModel.eventLiveData.observe(viewLifecycleOwner) { event ->
             when (event) {
-                is HomeEvent.GoToCreateExercise -> {
+                is HomeEvent.GoToExercise -> {
                     val bundle = bundleOf(
                         ExerciseFragment.KEY_TRAINING to event.idTraining,
                         ExerciseFragment.KEY_EXERCISE to event.exerciseModel
@@ -125,6 +131,12 @@ class HomeFragment : Fragment() {
                         R.id.action_homeFragment_to_editTrainingFragment,
                         bundleOf(TrainingFragment.KEY_TRAINING to event.training)
                     )
+                }
+                is HomeEvent.MessageError -> {
+                    Snackbar.make(requireActivity(), binding.root,  event.message, Snackbar.LENGTH_SHORT).show()
+                }
+                is HomeEvent.GoToInitList -> {
+
                 }
             }
         }

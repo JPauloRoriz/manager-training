@@ -1,14 +1,16 @@
 package com.example.managertraining.presentation.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.aminography.choosephotohelper.ChoosePhotoHelper
 import com.bumptech.glide.Glide
 import com.example.managertraining.R
 import com.example.managertraining.databinding.FragmentExerciseBinding
@@ -21,7 +23,8 @@ import org.koin.core.parameter.parametersOf
 
 
 class ExerciseFragment : Fragment() {
-
+    private lateinit var choosePhotoHelper: ChoosePhotoHelper
+    private var uriSelected: Uri? = null
     private val idTraining by lazy { arguments?.getString(KEY_TRAINING) }
     private val exercise by lazy { arguments?.getParcelable<ExerciseModel>(KEY_EXERCISE) }
     private val viewModel by viewModel<ExerciseViewModel> {
@@ -37,11 +40,49 @@ class ExerciseFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         setupObservers()
+        permissionPhoto(savedInstanceState)
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        choosePhotoHelper.onActivityResult(requestCode, resultCode, data)
+
+        viewModel.saveImage(data?.data)
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        choosePhotoHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        choosePhotoHelper.onSaveInstanceState(outState)
+    }
+
+    private fun permissionPhoto(savedInstanceState: Bundle?) {
+        choosePhotoHelper = ChoosePhotoHelper.with(requireActivity())
+            .asFilePath()
+            .withState(savedInstanceState)
+            .alwaysShowRemoveOption(true)
+            .build {
+                Glide.with(requireActivity())
+                    .load(it)
+                    .into(binding.imgExercise)
+            }
+    }
+
 
     private fun setupListeners() {
         binding.btnCreateOrEdit.setOnClickListener {
@@ -55,11 +96,15 @@ class ExerciseFragment : Fragment() {
         binding.btnDelete.setOnClickListener {
             viewModel.deleteExercise()
         }
+
+        binding.imgExercise.setOnClickListener {
+            choosePhotoHelper.showChooser()
+        }
     }
 
     private fun setupObservers() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
-            binding.progressBar.isVisible = state.isLoading
+            binding.progressBar.isGone = !state.isLoading
             binding.btnCreateOrEdit.text = state.textButtonConfirm
             binding.tvCreateOrEditExercise.text = state.textTitleAction
             binding.tvAddPhoto.isGone = !state.showTrash
@@ -68,6 +113,7 @@ class ExerciseFragment : Fragment() {
             binding.btnDelete.isGone = !state.showTrash
             binding.edtNameExercise.setText(state.nameExercise)
             binding.edtNoteExercise.setText(state.noteExercise)
+
             if (!exercise?.image.isNullOrEmpty()) {
                 Glide.with(requireContext())
                     .load(exercise?.image)
@@ -94,6 +140,7 @@ class ExerciseFragment : Fragment() {
             }
         }
     }
+
 
     companion object {
         const val KEY_TRAINING: String = "training"

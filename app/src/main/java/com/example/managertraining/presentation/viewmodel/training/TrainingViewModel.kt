@@ -9,6 +9,7 @@ import com.example.managertraining.domain.exception.EmptyFildException
 import com.example.managertraining.domain.exception.NoConnectionInternetException
 import com.example.managertraining.domain.model.TrainingModel
 import com.example.managertraining.domain.usecase.training.contract.CreateTrainingUseCase
+import com.example.managertraining.domain.usecase.training.contract.DeleteExercisesByTrainingUseCase
 import com.example.managertraining.domain.usecase.training.contract.DeleteTrainingUseCase
 import com.example.managertraining.domain.usecase.training.contract.UpdateTrainingUseCase
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
@@ -17,11 +18,12 @@ import com.example.managertraining.presentation.viewmodel.training.model.EditTra
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class EditTrainingViewModel(
+class TrainingViewModel(
     private val context: android.content.Context,
     private val createTrainingUseCase: CreateTrainingUseCase,
     private val updateTrainingUseCase: UpdateTrainingUseCase,
     private val deleteTrainingUseCase: DeleteTrainingUseCase,
+    private val deleteExercisesForTrainingUseCase: DeleteExercisesByTrainingUseCase
 ) : ViewModel() {
 
     val stateLiveData = MutableLiveData(
@@ -38,7 +40,7 @@ class EditTrainingViewModel(
         if (!training.isEmpty) {
             stateLiveData.value = EditTrainingState(
                 textOfButton = context.getString(R.string.edti_training),
-                nameDay = context.getString(R.string.name_day, training.data),
+                nameDay = context.getString(R.string.name_day, training.data.toString()),
                 title = context.getString(R.string.edti_training),
                 nameTraining = training.name,
                 description = training.description
@@ -117,11 +119,10 @@ class EditTrainingViewModel(
         stateLiveData.setLoading(true)
         viewModelScope.launch {
             deleteTrainingUseCase.invoke(training).onSuccess {
+                deleteExercisesForTrainingUseCase.invoke(training.id)
                 stateLiveData.setLoading(false)
                 eventLiveData.value =
                     EditTrainingEvent.SuccessDeleteTraining(context.getString(R.string.training_delete_success))
-
-
             }.onFailure {
                 stateLiveData.setLoading(false)
                 stateLiveData.setMessageError(it.message.toString())

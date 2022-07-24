@@ -14,14 +14,14 @@ class ExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(exercise: ExerciseModel, clickExercise: ((ExerciseModel) -> Unit)?) {
         with(binding) {
-            if (exercise.image.isNotEmpty()) {
+
             Glide.with(this.imgExercise.context)
                 .load(exercise.image)
                 .error(R.drawable.ic_image_empty)
                 .placeholder(R.drawable.ic_image_empty)
                 .fitCenter()
                 .into(this.imgExercise)
-            }
+
             root.setOnClickListener {
                 clickExercise?.invoke(exercise)
             }
