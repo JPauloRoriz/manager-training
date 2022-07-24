@@ -1,7 +1,7 @@
 package com.example.managertraining.presentation.viewmodel.exercise
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,17 +16,19 @@ import com.example.managertraining.domain.usecase.exercise.contract.UpdateExerci
 import com.example.managertraining.presentation.viewmodel.base.SingleLiveEvent
 import com.example.managertraining.presentation.viewmodel.exercise.model.ExerciseEvent
 import com.example.managertraining.presentation.viewmodel.exercise.model.ExerciseState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ExerciseViewModel(
     private val idTraining: String,
-    private val exercise: ExerciseModel? = null,
+    private var exercise: ExerciseModel? = null,
     private val context: Context,
     private val createExerciseUseCase: CreateExerciseUseCase,
     private val deleteExerciseUseCase: DeleteExerciseUseCase,
     private val updateExerciseUseCase: UpdateExerciseUseCase,
     private val saveImageUseCase: SaveImageUseCase
 ) : ViewModel() {
+    private var currentImage: Bitmap? = null
     val stateLiveData = MutableLiveData(ExerciseState())
     val eventLiveData = SingleLiveEvent<ExerciseEvent>()
 
@@ -36,8 +38,7 @@ class ExerciseViewModel(
         stateLiveData.value = stateLiveData.value?.copy(
             isLoading = false,
             showTrash = isEdition,
-            showIcAdd = isEdition,
-            showTextAdd = isEdition,
+            showAddNewItem = exercise?.image.isNullOrEmpty(),
             textButtonConfirm = if (isEdition) context.getString(R.string.edit_exercise) else context.getString(
                 R.string.create_exercise
             ),
@@ -74,21 +75,66 @@ class ExerciseViewModel(
         }
     }
 
-    fun createOrEditExercise(name: String, note: String, image: String) {
+    fun createOrEditExercise(name: String, note: String) {
+        stateLiveData.setLoading(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            uploadImage { urlImage ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    exercise?.let { exercise ->
+                        editExercise(exercise.id, name, note, urlImage)
+                    } ?: run {
+                        createExercise(name, note, urlImage)
+                    }
+                }
+            }
 
-        if (exercise == null) {
-            createExercise(name, note, image)
-        } else {
-            editExercise(exercise.id, name, note, exercise.image)
+        }
+
+    }
+
+    private suspend fun uploadImage(success: (String) -> Unit) {
+        if (currentImage == null) success(exercise?.image ?: "")
+        currentImage?.let {
+            stateLiveData.postValue(
+                stateLiveData.value?.copy(
+                    isLoading = true,
+                    showAddNewItem = false
+                )
+            )
+            saveImageUseCase.invoke(currentImage).onSuccess { url ->
+                url?.let { success(url) }
+            }.onFailure {
+                eventLiveData.value =
+                    ExerciseEvent.MessageError(context.getString(R.string.error_upload_image))
+            }
         }
     }
 
-    private fun editExercise(id: String, name: String, note: String, image: String) {
-        stateLiveData.setLoading(true)
-        viewModelScope.launch {
-            updateExerciseUseCase.invoke(id, name, note, image).onSuccess {
-                eventLiveData.value =
-                    ExerciseEvent.SuccessExercise(context.getString(R.string.exercise_edited_success))
+    private suspend fun editExercise(id: String, name: String, note: String, iamge: String) {
+        updateExerciseUseCase.invoke(id, name, note, iamge).onSuccess {
+            stateLiveData.setLoading(false)
+            eventLiveData.postValue(ExerciseEvent.SuccessExercise(context.getString(R.string.exercise_edited_success)))
+        }.onFailure { error ->
+            stateLiveData.setLoading(false)
+            when (error) {
+                is NoConnectionInternetException -> {
+                    eventLiveData.value =
+                        ExerciseEvent.MessageError(context.getString(R.string.not_internet))
+                }
+                is DefaultException -> {
+                    eventLiveData.value =
+                        ExerciseEvent.MessageError(context.getString(R.string.error_default_exercise))
+                }
+            }
+        }
+    }
+
+    private suspend fun createExercise(name: String, note: String, image: String) {
+        idTraining.let {
+            createExerciseUseCase.invoke(it, name, note, image).onSuccess {
+                stateLiveData.setLoading(false)
+                eventLiveData.postValue(ExerciseEvent.SuccessExercise(context.getString(R.string.exercise_add_success)))
+
             }.onFailure { error ->
                 stateLiveData.setLoading(false)
                 when (error) {
@@ -98,33 +144,7 @@ class ExerciseViewModel(
                     }
                     is DefaultException -> {
                         eventLiveData.value =
-                            ExerciseEvent.MessageError(context.getString(R.string.error_default_exercise))
-                    }
-                }
-            }
-        }
-    }
-
-    private fun createExercise(name: String, note: String, image: String) {
-        stateLiveData.setLoading(true)
-        viewModelScope.launch {
-            idTraining.let {
-                createExerciseUseCase.invoke(it, name, note, image).onSuccess {
-                    stateLiveData.setLoading(false)
-                    eventLiveData.value =
-                        ExerciseEvent.SuccessExercise(context.getString(R.string.exercise_add_success))
-
-                }.onFailure { error ->
-                    stateLiveData.setLoading(false)
-                    when (error) {
-                        is NoConnectionInternetException -> {
-                            eventLiveData.value =
-                                ExerciseEvent.MessageError(context.getString(R.string.not_internet))
-                        }
-                        is DefaultException -> {
-                            eventLiveData.value =
-                                ExerciseEvent.MessageError(context.getString(R.string.error_default_crate_exercise))
-                        }
+                            ExerciseEvent.MessageError(context.getString(R.string.error_default_crate_exercise))
                     }
                 }
             }
@@ -132,13 +152,11 @@ class ExerciseViewModel(
     }
 
     private fun MutableLiveData<ExerciseState>.setLoading(value: Boolean) {
-        this.value = this.value?.copy(isLoading = value)
+        this.postValue(this.value?.copy(isLoading = value))
     }
 
-    fun saveImage(data: Uri?) {
-        viewModelScope.launch {
-            saveImageUseCase.invoke(data)
-        }
+    fun saveImage(data: Bitmap?) {
+        this.currentImage = data
     }
 
 }

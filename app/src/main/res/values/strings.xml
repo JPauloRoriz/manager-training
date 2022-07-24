@@ -65,5 +65,6 @@
     <string name="remove_photo">Remover foto</string>
     <string name="error_loading_trainings">Ocorreu um erro ao carregar os treinos</string>
     <string name="error_loading_exercises">Erro ao carregar os exercicios deste treino</string>
+    <string name="error_upload_image">Não foi possível cadastrar o exercício, por favor tente novamente mais tarde</string>
 
 </resources>

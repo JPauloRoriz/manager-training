@@ -7,13 +7,14 @@ import com.example.managertraining.R
 import com.example.managertraining.data.repository.exercise.contract.ExerciseRepository
 import com.example.managertraining.domain.exception.EmptyFildException
 import com.example.managertraining.domain.exception.NoConnectionInternetException
+import com.example.managertraining.domain.model.ExerciseModel
 import com.example.managertraining.domain.usecase.exercise.contract.UpdateExerciseUseCase
 
 class UpdateExerciseUseCaseImpl(
     private val repository: ExerciseRepository,
     private val context: Context
 ) : UpdateExerciseUseCase {
-    override suspend fun invoke(idExercise: String, name: String, note: String, image: String): Result<Any?> {
+    override suspend fun invoke(idExercise: String, name: String, note: String, image: String): Result<ExerciseModel> {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true

@@ -7,6 +7,7 @@ import com.example.managertraining.R
 import com.example.managertraining.data.repository.exercise.contract.ExerciseRepository
 import com.example.managertraining.domain.exception.EmptyFildException
 import com.example.managertraining.domain.exception.NoConnectionInternetException
+import com.example.managertraining.domain.model.ExerciseModel
 import com.example.managertraining.domain.usecase.exercise.contract.CreateExerciseUseCase
 
 class CreateExerciseUseCaseImpl(
@@ -22,7 +23,7 @@ class CreateExerciseUseCaseImpl(
         name: String,
         note: String,
         image: String
-    ): Result<Any?> {
+    ): Result<ExerciseModel> {
         return if (name.isEmpty() || note.isEmpty()) {
             Result.failure(EmptyFildException(context.getString(R.string.empty_fild)))
         }  else if (!isConnected) {

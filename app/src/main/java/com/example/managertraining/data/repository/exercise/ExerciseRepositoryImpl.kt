@@ -1,6 +1,6 @@
 package com.example.managertraining.data.repository.exercise
 
-import android.net.Uri
+import android.graphics.Bitmap
 import com.example.managertraining.data.model.ExerciseResponse
 import com.example.managertraining.data.repository.exercise.contract.ExerciseRepository
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
@@ -18,10 +18,18 @@ class ExerciseRepositoryImpl(
         name: String,
         note: String,
         image: String
-    ): Result<Any?> {
+    ): Result<ExerciseModel> {
         val exerciseResponse =
             ExerciseResponse(idTraining = idTraining, name = name, note = note, image = image)
-        return exerciseService.createExercise(exerciseResponse).recoverCatching { error ->
+        return exerciseService.createExercise(exerciseResponse).map {
+            ExerciseModel(
+                id = it.id,
+                idTraining = it.idTraining,
+                name = it.name,
+                image = it.image,
+                note = it.note
+            )
+        }.recoverCatching { error ->
             return when (error) {
                 is IOException -> Result.failure(NoConnectionInternetException())
                 is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
@@ -45,9 +53,19 @@ class ExerciseRepositoryImpl(
         name: String,
         note: String,
         image: String
-    ): Result<Any?> {
+    ): Result<ExerciseModel> {
         return exerciseService.updateExercise(idExercise, name, note, image)
-            .recoverCatching { error ->
+            .map { exerciseResponse ->
+                return Result.success(
+                    ExerciseModel(
+                        id = exerciseResponse.id,
+                        idTraining = exerciseResponse.idTraining,
+                        name = exerciseResponse.name,
+                        image = exerciseResponse.image,
+                        note = exerciseResponse.note
+                    )
+                )
+            }.recoverCatching { error ->
                 return when (error) {
                     is IOException -> Result.failure(NoConnectionInternetException())
                     is FirebaseNetworkException -> Result.failure(NoConnectionInternetException())
@@ -80,7 +98,7 @@ class ExerciseRepositoryImpl(
         exerciseService.deleteAllExercisesOfTraining(idTraining)
     }
 
-    override suspend fun saveImageExercise(data: Uri?): Result<String?> {
+    override suspend fun saveImageExercise(data: Bitmap?): Result<String?> {
         return exerciseService.saveImageExercise(data).recoverCatching { exception ->
             return when (exception) {
                 is IOException -> Result.failure(NoConnectionInternetException())

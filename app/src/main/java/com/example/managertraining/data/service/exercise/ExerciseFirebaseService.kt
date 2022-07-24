@@ -1,12 +1,13 @@
 package com.example.managertraining.data.service.exercise
 
-import android.net.Uri
+import android.graphics.Bitmap
 import com.example.managertraining.data.model.ExerciseResponse
 import com.example.managertraining.data.service.exercise.contract.ExerciseService
+import com.example.managertraining.domain.exception.DefaultException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
-import java.io.File
+import java.io.ByteArrayOutputStream
 
 class ExerciseFirebaseService(
     private val firestore: FirebaseFirestore,
@@ -16,17 +17,20 @@ class ExerciseFirebaseService(
         firestore.collection(EXERCISE_TABLE)
     }
     private val exerciseStorage by lazy {
-        storageFirebase.reference
+        storageFirebase.reference.child("EXERCICIES")
     }
 
-    val mountainsRef = exerciseStorage.child("mountains.jpg")
-
-
-    override suspend fun createExercise(exercise: ExerciseResponse): Result<Any?> {
+    override suspend fun createExercise(exercise: ExerciseResponse): Result<ExerciseResponse> {
         return try {
             exercise.id = exerciseFirebase.document().id
             exerciseFirebase.document(exercise.id).set(exercise).await()
-            Result.success(null)
+
+            val exerciseResponse = exerciseFirebase.document(exercise.id).get().await()
+            exerciseResponse.toObject(ExerciseResponse::class.java)?.let { exerciseResp ->
+                Result.success(exerciseResp)
+            } ?: run {
+                Result.failure(DefaultException())
+            }
         } catch (exception: Exception) {
             Result.failure(exception)
         }
@@ -46,7 +50,7 @@ class ExerciseFirebaseService(
         name: String,
         note: String,
         image: String
-    ): Result<Any?> {
+    ): Result<ExerciseResponse> {
         return try {
             exerciseFirebase.document(idExercise)
                 .update(
@@ -54,7 +58,12 @@ class ExerciseFirebaseService(
                     "note", note,
                     "image", image
                 ).await()
-            Result.success(null)
+            val exerciseResponse = exerciseFirebase.document(idExercise).get().await()
+            exerciseResponse.toObject(ExerciseResponse::class.java)?.let { exercise ->
+                Result.success(exercise)
+            } ?: run {
+                Result.failure(DefaultException())
+            }
         } catch (exception: Exception) {
             Result.failure(exception)
         }
@@ -82,19 +91,21 @@ class ExerciseFirebaseService(
 
     }
 
-    override suspend fun saveImageExercise(data: Uri?): Result<String?> {
+    override suspend fun saveImageExercise(bitmap: Bitmap?): Result<String?> {
         return try {
-            val file = File("path/to/images/rivers.jpg")
-            val riversRef = exerciseStorage.child("images/${file.name}")
+            val baos = ByteArrayOutputStream()
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            val idImage = exerciseFirebase.document().id
+            val uploadTask = exerciseStorage.child(idImage).putBytes(data).await()
 
-            data?.let { riversRef.putFile(it).await() }
-            Result.success("")
-
+            Result.success(uploadTask.storage.downloadUrl.await().toString())
         } catch (exception: Exception) {
             Result.failure(exception)
         }
 
     }
+
 
     companion object {
         private const val EXERCISE_TABLE = "exercise"

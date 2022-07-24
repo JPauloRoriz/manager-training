@@ -5,8 +5,7 @@ import android.net.Uri
 data class ExerciseState(
     val isLoading: Boolean = false,
     val showTrash: Boolean = false,
-    val showIcAdd: Boolean = true,
-    val showTextAdd: Boolean = true,
+    val showAddNewItem: Boolean = true,
     val textButtonConfirm: String = "",
     val textTitleAction: String = "",
     var nameExercise: String? = "",

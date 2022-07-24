@@ -1,13 +1,12 @@
 package com.example.managertraining.presentation.ui.fragment
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.aminography.choosephotohelper.ChoosePhotoHelper
@@ -24,7 +23,6 @@ import org.koin.core.parameter.parametersOf
 
 class ExerciseFragment : Fragment() {
     private lateinit var choosePhotoHelper: ChoosePhotoHelper
-    private var uriSelected: Uri? = null
     private val idTraining by lazy { arguments?.getString(KEY_TRAINING) }
     private val exercise by lazy { arguments?.getParcelable<ExerciseModel>(KEY_EXERCISE) }
     private val viewModel by viewModel<ExerciseViewModel> {
@@ -43,18 +41,14 @@ class ExerciseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListeners()
+        setupListeners(savedInstanceState)
         setupObservers()
-        permissionPhoto(savedInstanceState)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         choosePhotoHelper.onActivityResult(requestCode, resultCode, data)
-
-        viewModel.saveImage(data?.data)
-
     }
 
     override fun onRequestPermissionsResult(
@@ -71,25 +65,21 @@ class ExerciseFragment : Fragment() {
         choosePhotoHelper.onSaveInstanceState(outState)
     }
 
-    private fun permissionPhoto(savedInstanceState: Bundle?) {
-        choosePhotoHelper = ChoosePhotoHelper.with(requireActivity())
-            .asFilePath()
+
+    private fun setupListeners(savedInstanceState: Bundle?) {
+        choosePhotoHelper = ChoosePhotoHelper.with(this)
+            .asBitmap()
             .withState(savedInstanceState)
             .alwaysShowRemoveOption(true)
-            .build {
-                Glide.with(requireActivity())
-                    .load(it)
-                    .into(binding.imgExercise)
+            .build { image ->
+                viewModel.saveImage(image)
+                binding.imgExercise.setImageBitmap(image)
             }
-    }
 
-
-    private fun setupListeners() {
         binding.btnCreateOrEdit.setOnClickListener {
             viewModel.createOrEditExercise(
                 binding.edtNameExercise.text.toString(),
                 binding.edtNoteExercise.text.toString(),
-                ""
             )
         }
 
@@ -104,13 +94,12 @@ class ExerciseFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
-            binding.progressBar.isGone = !state.isLoading
+            binding.progressBar.isVisible = state.isLoading
             binding.btnCreateOrEdit.text = state.textButtonConfirm
             binding.tvCreateOrEditExercise.text = state.textTitleAction
-            binding.tvAddPhoto.isGone = !state.showTrash
-            binding.icAddImage.isGone = state.showIcAdd
-            binding.tvAddPhoto.isGone = state.showTextAdd
-            binding.btnDelete.isGone = !state.showTrash
+            binding.icAddImage.isVisible = state.showAddNewItem
+            binding.tvAddPhoto.isVisible = state.showAddNewItem
+            binding.btnDelete.isVisible = state.showTrash
             binding.edtNameExercise.setText(state.nameExercise)
             binding.edtNoteExercise.setText(state.noteExercise)
 

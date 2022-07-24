@@ -12,4 +12,5 @@
     <color name="color_item_training">#060B25</color>
     <color name="training_empty">#1B000000</color>
     <color name="tranparent_empty">#00FFFFFF</color>
+    <color name="background_image_exercise">#27000000</color>
 </resources>
